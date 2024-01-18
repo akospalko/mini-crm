@@ -3,7 +3,7 @@ import useClients from "../hooks/useClients";
 import useForm from "../hooks/useForm";
 import useFormDataTemplate from "../hooks/useFormDataTemplate";
 import useToggleMenu from "../hooks/useToggleMenu";
-import {ACTIVE_MENU_ACTION_TYPE} from "../types/actionTypes";
+import {ACTIVE_MENU_ACTION_TYPE, DATABASE_RESOURCES} from "../types/actionTypes";
 import {ClientItemI, PopulateFormDataWithActiveClientI, ClientFormTemplateI} from "../types/types";
 import {deleteItemByID, findActiveArrayItem, populateFormWithActiveData} from "../utility/misc";
 import ManagementItemButton from "./UI/ManagementItemButton";
@@ -79,6 +79,8 @@ const ClientMangementItem = ({itemData}: ClientManagementI) => {
       type: REDUCER_ACTIONS_CLIENT.DELETE_CLIENT,
       payload: {clients: updatedClient},
     });
+    // update ls
+    localStorage.setItem(DATABASE_RESOURCES.CLIENTS, JSON.stringify(updatedClient));
   }
 
   // STYLE 

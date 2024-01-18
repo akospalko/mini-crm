@@ -3,7 +3,7 @@ import useForm from "../hooks/useForm";
 import useFormDataTemplate from "../hooks/useFormDataTemplate";
 import useProperty from "../hooks/useProperty";
 import useToggleMenu from "../hooks/useToggleMenu";
-import {ACTIVE_MENU_ACTION_TYPE} from "../types/actionTypes";
+import {ACTIVE_MENU_ACTION_TYPE, DATABASE_RESOURCES} from "../types/actionTypes";
 import {PropertyItemI} from "../types/types";
 import {deleteItemByID, findActiveArrayItem, populateFormWithActiveData} from "../utility/misc";
 import ManagementItemButton from "./UI/ManagementItemButton";
@@ -48,12 +48,14 @@ const PropertyManagementItem = ({itemData}: PropertyCardPropsI) => {
   // Delete property from data storage
   const deletePropertyHandler = (itemID: string): void => {
     // filter data 
-    const updatedProperty = deleteItemByID(itemID, property) as PropertyItemI[];
+    const updatedProperties = deleteItemByID(itemID, property) as PropertyItemI[];
     // update state
     dispatchProperty({
       type: REDUCER_ACTIONS_PROPERTY.DELETE_PROPERTY,
-      payload: {property: updatedProperty},
+      payload: {property: updatedProperties},
     });
+    // update ls
+    localStorage.setItem(DATABASE_RESOURCES.PROPERTIES, JSON.stringify(updatedProperties));
   }
 
   // STYLE 

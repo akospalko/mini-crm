@@ -34,3 +34,8 @@ export enum PAGE_ROUTES {
   MANAGE_CLIENTS = "/manage-clients",
   MANAGE_PROPERTIES = "/manage-properties"
 }
+
+export enum DATABASE_RESOURCES {
+  CLIENTS = "clients",
+  PROPERTIES = "properties"
+}

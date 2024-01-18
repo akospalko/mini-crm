@@ -12,6 +12,7 @@ import {
   PropertyTypeE,
 } from "../types/types";
 import {updateDataArray} from "../utility/misc";
+import { DATABASE_RESOURCES } from "../types/actionTypes";
 
 const useFormHandlers = () => {
   // CONTEXTS
@@ -71,11 +72,15 @@ const useFormHandlers = () => {
       "properties": propertiesData
     }
 
+    const newClientsArray: ClientItemI[] = [...clients, newClient];
+
     // create client - update state
     dispatchClients({
       type: REDUCER_ACTIONS_CLIENT.CREATE_CLIENT,
-      payload: {newClient},
+      payload: {clients: newClientsArray},
     });
+    // update clients in ls  
+    localStorage.setItem(DATABASE_RESOURCES.CLIENTS, JSON.stringify(newClientsArray));
   };
 
   // Create property - process and store data
@@ -111,12 +116,18 @@ const useFormHandlers = () => {
       "id": propertyID,
     } as PropertyItemI
 
+    // 
+    const newPropertiesArray = [...property, newProperty];
+
     // create client - update state
     dispatchProperty({
       type: REDUCER_ACTIONS_PROPERTY.CREATE_PROPERTY,
-      payload: {newProperty},
+      payload: {property: newPropertiesArray},
     });
-    
+
+    // update properties in ls
+    localStorage.setItem(DATABASE_RESOURCES.PROPERTIES, JSON.stringify(newPropertiesArray));
+
     // update all existing client's properties with new property assigned to client entry's properties
     const updatedClients: ClientItemI[] = clients?.map((client) => ({
       ...client,
@@ -128,6 +139,8 @@ const useFormHandlers = () => {
       type: REDUCER_ACTIONS_CLIENT.UPDATE_CLIENT,
       payload: {clients: updatedClients},
     });
+    // update clients in ls
+    localStorage.setItem(DATABASE_RESOURCES.CLIENTS, JSON.stringify(updatedClients));
   }
 
   // Updating existing client
@@ -146,48 +159,50 @@ const useFormHandlers = () => {
       return {[key]: value["value"]};
     });
 
-   // convert client to clients storage complatible data
-   const clientData: ClientItemI = clientFormValues.reduce(
-     (acc: ClientItemI, item) => {
-       const key: ClientKeys = Object.keys(item)[0] as ClientKeys;
-       const value = item[key];
-       acc[key] = value;
+    // convert client to clients storage complatible data
+    const clientData: ClientItemI = clientFormValues.reduce(
+      (acc: ClientItemI, item) => {
+        const key: ClientKeys = Object.keys(item)[0] as ClientKeys;
+        const value = item[key];
+        acc[key] = value;
        
-       return acc;
-     },
-     {
-       id: "",
-       "full name": "",
-       address: "",
-       phone: "",
-       note: "",
-       position: JobPositionsE.CEO,
-       properties: [],
-     }
-   );
+        return acc;
+      },
+      {
+        id: "",
+        "full name": "",
+        address: "",
+        phone: "",
+        note: "",
+        position: JobPositionsE.CEO,
+        properties: [],
+      }
+    );
    
-   // convert property to clients storage compatible(property) data
-   const propertiesData = propertiesFormValues.map((item) => {
-     const key = Object.keys(item)[0];
-     const value = item[key];
-   
-     return {id: key, value};
-   });
+    // convert property to clients storage compatible(property) data
+    const propertiesData = propertiesFormValues.map((item) => {
+      const key = Object.keys(item)[0];
+      const value = item[key];
+    
+      return {id: key, value};
+    });
 
-   // define new client
-   const updatedClient: ClientItemI = {
-     ...clientData,
-     "id": activeClient.id,
-     "properties": propertiesData
-   }
+    // define new client
+    const updatedClient: ClientItemI = {
+      ...clientData,
+      "id": activeClient.id,
+      "properties": propertiesData
+    }
 
-  const updatedClients = updateDataArray(clients, updatedClient) as ClientItemI[];
+    const updatedClients = updateDataArray(clients, updatedClient) as ClientItemI[];
 
-  // store updated client
-   dispatchClients({
-     type: REDUCER_ACTIONS_CLIENT.UPDATE_CLIENT,
-     payload: {clients: updatedClients},
-   });
+    // store updated client
+    dispatchClients({
+      type: REDUCER_ACTIONS_CLIENT.UPDATE_CLIENT,
+      payload: {clients: updatedClients},
+    });
+    // update clients in ls  
+    localStorage.setItem(DATABASE_RESOURCES.CLIENTS, JSON.stringify(updatedClients));
   }
 
   // Update existing property
@@ -226,6 +241,9 @@ const useFormHandlers = () => {
       type: REDUCER_ACTIONS_PROPERTY.UPDATE_PROPERTY,
       payload: {property: updatedProperties},
     });
+    
+    // update properties in ls  
+    localStorage.setItem(DATABASE_RESOURCES.PROPERTIES, JSON.stringify(updatedProperties));
   }
 
   return {createNewClient, createNewProperty, updateExistingClient, updateExistingProperty};

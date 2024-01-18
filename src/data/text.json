@@ -9,5 +9,6 @@
   "content-title-content-unavailable": "Content Unavailable",
   "empty-list": "There is nothing to display",
   "error-unknown-action-type": "Unknown action type",
-  "error-action-payload-missing": "Action payload is missing for:"
+  "error-action-payload-missing": "Action payload is missing for:",
+  "error-fetching-data": "Error fetching data:"
 }

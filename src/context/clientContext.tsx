@@ -1,8 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 // Client state logic 
 import {createContext, useEffect, useReducer, useMemo} from "react";
-import {REDUCER_ACTION_TYPE_CLIENT} from "../types/actionTypes";
+import {DATABASE_RESOURCES, REDUCER_ACTION_TYPE_CLIENT} from "../types/actionTypes";
 import {ClientItemI, UseClientContextType, ClientContextReducerActionI, ClientStateI, ChildrenType} from "../types/types";
+import useFetchData from "./useFetchData";
 import text from "../data/text.json";
 
 // REDUCER
@@ -15,13 +16,10 @@ const reducer = (state: ClientStateI, action: ClientContextReducerActionI): Clie
   switch(action.type) {
     // CREATE CLIENT (single)
     case REDUCER_ACTION_TYPE_CLIENT.CREATE_CLIENT: 
-    if (!action.payload || !("newClient" in action.payload)) {
-      throw errorActionPayloadMissing(action.type);
-    }
-    return { 
-      ...state,  
-      clients: state.clients ? [...state.clients, action.payload.newClient] : [action.payload.newClient]
-    };
+      if (!action.payload || !("clients" in action.payload)) {
+        throw errorActionPayloadMissing(action.type);
+      }
+      return {...state, clients: action.payload.clients}
     // UPDATE CLIENTS 
     case REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT: 
     if (!action.payload || !("clients" in action.payload)) {
@@ -71,28 +69,18 @@ export const useClientContext = (initClientState: ClientStateI) => {
     return REDUCER_ACTION_TYPE_CLIENT;
   }, []) 
 
+  // HOOK
+  // Fetch data
+  const {data} = useFetchData(DATABASE_RESOURCES.CLIENTS);
+
   // EFFECTS
-  // Initial data fetch
+  // Store fetched data
   useEffect(() => {
-    const fetchClients = async (): Promise<void> => {
-      const fetchedClientData = await fetch("http://localhost:3500/clients")
-        .then((res) => res.json())
-        .catch((err) => {
-          if (err instanceof Error) {
-            throw new Error(String(err));
-          }
-        });
-  
-      // Store in state
-      dispatch({
-        type: REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT,
-        payload: {clients: fetchedClientData},
-      });
-    };
-  
-    // fetch data, update state
-    fetchClients();
-  }, []);
+    dispatch({
+      type: REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT,
+      payload: {clients: data as ClientItemI[]},
+    });
+  }, [data]);
 
   return {
     dispatch, 
