@@ -5,7 +5,7 @@ import useForm from "../../hooks/useForm";
 import {ACTIVE_MENU_ACTION_TYPE} from "../../types/actionTypes";
 import {ClientFormTemplateI, PropertyFormTemplateI} from "../../types/types";
 import Form from "./Form";
-import { CloseIcon } from "./SVG";
+import {CloseIcon} from "./SVG";
 
 const Menu = () => {
   // CONTEXT

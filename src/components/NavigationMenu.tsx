@@ -1,5 +1,4 @@
 // Navigate bwt components
-
 import {NavLink, useMatch} from "react-router-dom";
 import {DisplayClientIcon, ManagePropertiesIcon, ManageClientIcon} from "./UI/SVG";
 import {PAGE_ROUTES} from "../types/actionTypes";

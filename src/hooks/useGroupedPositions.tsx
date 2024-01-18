@@ -1,6 +1,6 @@
 // Aggregate clients based on their job positions
-import { useState, useEffect } from "react";
-import { JobPositionsE } from "../types/types";
+import {useState, useEffect} from "react";
+import {JobPositionsE} from "../types/types";
 import useClients from "./useClients";
 
 // INITIALIZER
@@ -16,7 +16,7 @@ const initializePositionCounts = (): Record<JobPositionsE, number> => {
 
 const useManagementOperations = () => {
   // CONTEXT
-  const { clients } = useClients();
+  const {clients} = useClients();
   
   // STATE
   const [clientPerPosition, setClientPerPosition] = useState<{ position: JobPositionsE; numberOfClients: number }[]>([]);

@@ -2,7 +2,7 @@
 // Used for checkbox and dropdown handlers
 
 import useForm from './useForm';
-import { JobPositionsE } from '../types/types';
+import {JobPositionsE} from '../types/types';
 
 const useUpdateFormDataValue = () => {
   // HOOK

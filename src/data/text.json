@@ -1,0 +1,13 @@
+{
+  "submit": "submit",
+  "title-main": "Mini CRM",
+  "title-dashboard": "Dashboard",
+  "title-content-clients-list": "Clients",
+  "title-content-clients-filtered": "Filtered Clients",
+  "title-content-clients-management": "Clients Management",
+  "title-content-properties-management": "Properties Management",
+  "content-title-content-unavailable": "Content Unavailable",
+  "empty-list": "There is nothing to display",
+  "error-unknown-action-type": "Unknown action type",
+  "error-action-payload-missing": "Action payload is missing for:"
+}

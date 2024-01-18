@@ -1,10 +1,11 @@
 // Reusable form component 
 import MultiTypeInput from "./MultiTypeInput";
 import {DropdownFormFieldI, InputFieldTypesE} from "../../types/types";
-import {ACTIVE_MENU_ACTION_TYPE } from "../../types/actionTypes";
+import {ACTIVE_MENU_ACTION_TYPE} from "../../types/actionTypes";
 import useForm from "../../hooks/useForm";
 import useManagementOperations from "../../hooks/useManagementOperations";
 import useToggleMenu from "../../hooks/useToggleMenu";
+import text from "../../data/text.json";
 
 interface FormPropsI {
   action: ACTIVE_MENU_ACTION_TYPE
@@ -90,7 +91,7 @@ const Form = ({action}: FormPropsI) => {
         <button 
           className="w-[100px] h-[50px] bg-gray-700 mx-auto rounded"
           type="submit"
-        >Submit</button>
+        >{text["submit"]}</button>
       </div>
     </form>
   )

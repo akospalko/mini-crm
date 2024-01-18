@@ -3,19 +3,20 @@
 import {createContext, useEffect, useReducer, useMemo} from "react";
 import {REDUCER_ACTION_TYPE_CLIENT} from "../types/actionTypes";
 import {ClientItemI, UseClientContextType, ClientContextReducerActionI, ClientStateI, ChildrenType} from "../types/types";
+import text from "../data/text.json";
 
 // REDUCER
 const reducer = (state: ClientStateI, action: ClientContextReducerActionI): ClientStateI => {
   // Errors
-  const actionTypeError = (textMessage: REDUCER_ACTION_TYPE_CLIENT): Error => new Error(`action payload is missing for: ${textMessage}`);
-  const unknownActionTypeError: Error = new Error("Unknown action type");
+  const errorActionPayloadMissing = (textMessage: REDUCER_ACTION_TYPE_CLIENT): Error => new Error(`${"error-action-payload-missing"} ${textMessage}`);
+  const errorUnknownActionType: Error = new Error(text["error-unknown-action-type"]);
 
   // Get active action 
   switch(action.type) {
     // CREATE CLIENT (single)
     case REDUCER_ACTION_TYPE_CLIENT.CREATE_CLIENT: 
     if (!action.payload || !("newClient" in action.payload)) {
-      throw actionTypeError(action.type);
+      throw errorActionPayloadMissing(action.type);
     }
     return { 
       ...state,  
@@ -24,30 +25,30 @@ const reducer = (state: ClientStateI, action: ClientContextReducerActionI): Clie
     // UPDATE CLIENTS 
     case REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT: 
     if (!action.payload || !("clients" in action.payload)) {
-        throw actionTypeError(action.type);
+        throw errorActionPayloadMissing(action.type);
       }
       return {...state, clients: action.payload.clients}
     // UPDATE FILTERED CLIENTS
     case REDUCER_ACTION_TYPE_CLIENT.UPDATE_FILTERED_CLIENTS: 
       if(!action.payload || !("filteredClients" in action.payload)) {
-        throw actionTypeError(action.type);
+        throw errorActionPayloadMissing(action.type);
       }
       return {...state, filteredClients: action.payload.filteredClients}
     // UPDATE ACTIVE CLIENTS
     case REDUCER_ACTION_TYPE_CLIENT.UPDATE_ACTIVE_CLIENT: 
       if(!action.payload || !("activeClient" in action.payload)) {
-        throw actionTypeError(action.type);
+        throw errorActionPayloadMissing(action.type);
       }
       return {...state, activeClient: action.payload.activeClient}
     // DELETE CLIENT (single)
     case REDUCER_ACTION_TYPE_CLIENT.DELETE_CLIENT: 
       if (!action.payload || !("clients" in action.payload)) {
-        throw actionTypeError(action.type);
+        throw errorActionPayloadMissing(action.type);
       }
       return {...state, clients: action.payload.clients}
     // DEFAULT
     default: {
-      throw unknownActionTypeError;
+      throw errorUnknownActionType;
     }
   }
 }

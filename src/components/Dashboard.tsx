@@ -1,14 +1,15 @@
 // Display of client metrics/statistics: aggregate of clients / position
-import useGroupedPositions from "../hooks/useGroupedPositions";
-import {JobPositionsE} from "../types/types";
-import useClients from "../hooks/useClients";
 import {useNavigate} from "react-router-dom";
+import useGroupedPositions from "../hooks/useGroupedPositions";
+import useClients from "../hooks/useClients";
+import {JobPositionsE} from "../types/types";
 import {PAGE_ROUTES} from "../types/actionTypes";
+import text from "../data/text.json";
 
 const Dashboard = () => {
 // ROUTE
-
 const navigate = useNavigate();
+
 // HOOK
 const clientPerPosition = useGroupedPositions();
 
@@ -31,7 +32,7 @@ const filterClientsHandler = (position: JobPositionsE) => {
 
 return (
     <div className="grid grid-rows-[100px,1fr] grid-cols-1 justify-center items-center flex-col w-full p-5 bg-slate-500 rounded-tr">
-      <h2 className="text-3xl text-center"> Dashboard </h2>
+      <h2 className="text-3xl text-center">{text["title-dashboard"]}</h2>
       <div className="grid gap-5 w-full grid-cols-[repeat(3,1fr)] grid-rows-auto self-start">
       {clientPerPosition
         .filter(positionItem => positionItem.numberOfClients > 0)

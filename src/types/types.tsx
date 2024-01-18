@@ -1,9 +1,9 @@
-import { useClientContext } from "../context/clientContext";
-import { useFormContext } from "../context/formContext";
-import { usePropertyContext } from "../context/propertyContext";
-import { useToggleMenuContext } from "../context/toggleMenuContext";
-import { REDUCER_ACTION_TYPE_CLIENT } from "./actionTypes";
-import { ACTIVE_MENU_ACTION_TYPE, REDUCER_ACTION_TYPE_PROPERTY} from "./actionTypes";
+import {useClientContext} from "../context/clientContext";
+import {useFormContext} from "../context/formContext";
+import {usePropertyContext} from "../context/propertyContext";
+import {useToggleMenuContext} from "../context/toggleMenuContext";
+import {REDUCER_ACTION_TYPE_CLIENT} from "./actionTypes";
+import {ACTIVE_MENU_ACTION_TYPE, REDUCER_ACTION_TYPE_PROPERTY} from "./actionTypes";
 
 // Collection of app related types, interfaces, enums
 // Property
@@ -119,7 +119,7 @@ export interface UseToggleMenuContextI {
   isToggled: boolean,
   menuContent: ACTIVE_MENU_ACTION_TYPE | "default",
   toggleModal: (forcedValue: boolean) => void,
-  menuContentChangeHandler: (activeContent: ACTIVE_MENU_ACTION_TYPE | "default") => void
+  menuContentChangeHandler: (activeContent: ACTIVE_MENU_ACTION_TYPE) => void
 }
 
 // Form.tsx, form templates

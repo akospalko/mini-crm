@@ -74,8 +74,6 @@ const ClientCard = ({clientData}: ClientCardPropsI) => {
           { basicInfoElements }
         </>
       )}
-      
-   
     </div>
   )
 }

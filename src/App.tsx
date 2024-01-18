@@ -3,8 +3,10 @@ import Dashboard from "./components/Dashboard";
 import Menu from "./components/UI/Menu";
 import NavigationMenu from "./components/NavigationMenu";
 import MainContent from "./components/MainContent";
+import text from "./data/text.json";
 
 function App() {
+  // CONTEXT
   const {isToggled} = useToggleMenu();
   
   return (
@@ -14,7 +16,9 @@ function App() {
         <NavigationMenu/>  
         <div className="grid grid-rows-[1fr,2fr] h-[calc(100vh-2*2rem)] w-full gap-5">
           <div className="flex h-full w-full bg-slate-500 rounded-bl rounded-br">
-            <h1 className="text-5xl text-center m-auto text-gray-100 select-none">Mini CRM</h1>
+            <h1 className="text-5xl text-center m-auto text-gray-100 select-none">
+              {text["title-main"]}
+            </h1>
           </div>
           <Dashboard/>
         </div>
