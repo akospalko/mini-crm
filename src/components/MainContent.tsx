@@ -1,11 +1,15 @@
 // Main page's content: displays client list, manage clients, manage properties
+import {lazy, Suspense} from "react";
 import {Route, Routes, Navigate, useLocation} from "react-router-dom";
-import MemoizedClientList from "./ClientList";
-import MemoizedManagement from "./Management";
-import {ACTIVE_MANAGEMENT, PAGE_ROUTES} from '../types/actionTypes';
+import {ACTIVE_MANAGEMENT, PAGE_ROUTES} from "../types/actionTypes";
 import useClients from "../hooks/useClients";
 import useProperty from "../hooks/useProperty";
+import LoaderMainContent from "./LoaderMainContent";
 import text from "../data/text.json";
+
+// LAZY LOAD
+const LazyMemoizedClientList = lazy(() => import("./ClientList"));
+const LazyMemoizedManagement = lazy(() => import("./Management"));
 
 const MainContent = () => {
   // ROUTE
@@ -40,13 +44,15 @@ const MainContent = () => {
       <div className="flex h-full w-full  rounded-bl rounded-br pb-0 overflow-hidden">
         <h2 className="flex justify-center items-center h-full w-full text-3xl text-center bg-slate-500 text-gray-300">{activeTitle}</h2>
       </div>
-      <Routes>
-        <Route path={PAGE_ROUTES.CLIENTS_LIST} element={<MemoizedClientList data={clients}/>}/>
-        <Route path={PAGE_ROUTES.CLIENTS_FILTERED} element={<MemoizedClientList data={filteredClients}/>}/>
-        <Route path={PAGE_ROUTES.MANAGE_CLIENTS} element={<MemoizedManagement data={clients} activeManagementTab={ACTIVE_MANAGEMENT.CLIENT_MANAGEMENT}/>}/>
-        <Route path={PAGE_ROUTES.MANAGE_PROPERTIES} element={<MemoizedManagement data={property} activeManagementTab={ACTIVE_MANAGEMENT.PROPERTY_MANAGEMENT}/>}/>
-        <Route path="/" element={<Navigate to={PAGE_ROUTES.CLIENTS_LIST}/>}/>
-      </Routes>
+      <Suspense fallback={<LoaderMainContent/>}>
+        <Routes>
+          <Route path={PAGE_ROUTES.CLIENTS_LIST} element={<LazyMemoizedClientList data={clients}/>}/>
+          <Route path={PAGE_ROUTES.CLIENTS_FILTERED} element={<LazyMemoizedClientList data={filteredClients}/>}/>
+          <Route path={PAGE_ROUTES.MANAGE_CLIENTS} element={<LazyMemoizedManagement data={clients} activeManagementTab={ACTIVE_MANAGEMENT.CLIENT_MANAGEMENT}/>}/>
+          <Route path={PAGE_ROUTES.MANAGE_PROPERTIES} element={<LazyMemoizedManagement data={property} activeManagementTab={ACTIVE_MANAGEMENT.PROPERTY_MANAGEMENT}/>}/>
+          <Route path="/" element={<Navigate to={PAGE_ROUTES.CLIENTS_LIST}/>}/>
+        </Routes>
+      </Suspense>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 {
-  "submit": "submit",
+  "submit": "Submit",
   "title-main": "Mini CRM",
   "title-dashboard": "Dashboard",
   "title-content-clients-list": "Clients",
@@ -10,5 +10,6 @@
   "empty-list": "There is nothing to display",
   "error-unknown-action-type": "Unknown action type",
   "error-action-payload-missing": "Action payload is missing for:",
-  "error-fetching-data": "Error fetching data:"
+  "error-fetching-data": "Error fetching data:",
+  "loader": "LOADING..."
 }
