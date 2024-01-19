@@ -6,6 +6,8 @@
   "title-content-clients-filtered": "Filtered Clients",
   "title-content-clients-management": "Clients Management",
   "title-content-properties-management": "Properties Management",
+  "title-client-card-basic-info": "Basic info",
+  "title-client-card-properties": "Properties",
   "content-title-content-unavailable": "Content Unavailable",
   "empty-list": "There is nothing to display",
   "error-unknown-action-type": "Unknown action type",

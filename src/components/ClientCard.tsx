@@ -2,6 +2,7 @@
 import { useMemo, ReactNode } from "react";
 import { ClientCardPropsI, PropertyItemRemappedT, PropertyTypeE, ClientKeys, ClientPropertyI } from "../types/types";
 import useProperty from "../hooks/useProperty";
+import text from "../data/text.json";
 
 // COMPONENT
 const ClientCard = ({clientData}: ClientCardPropsI) => {
@@ -65,13 +66,13 @@ const ClientCard = ({clientData}: ClientCardPropsI) => {
   });
 
   return (
-    <div className={clientItemStyle}> 
-      <h3 className={clientItemCategoryStyle}>Basic info</h3>  
-      { propertyElements }
-      { !!basicInfoElements.length && (
+    <div data-testid="client-list-card" className={clientItemStyle}> 
+      <h3 className={clientItemCategoryStyle}>{text["title-client-card-basic-info"]}</h3>  
+      {propertyElements}
+      {!!basicInfoElements.length && (
         <>
-          <h3 className={clientItemCategoryStyle}>Properties</h3> 
-          { basicInfoElements }
+          <h3 className={clientItemCategoryStyle}>{text["title-client-card-properties"]}</h3> 
+          {basicInfoElements}
         </>
       )}
     </div>
