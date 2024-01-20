@@ -68,7 +68,7 @@ const Management = ({data, activeManagementTab}: ManagementIProps) => {
   return (
     <div className="grid grid-rows-[50px,1fr] grid-cols-1 gap-5 pt-5">
       <CreateItemButton changed={propertyMenuHandler} title="Create"/>
-        <div className="flex flex-col w-full gap-5">
+      <div className="flex flex-col w-full gap-5">
         {data?.length ? tabContent : <EmptyList/> }
       </div>
     </div>

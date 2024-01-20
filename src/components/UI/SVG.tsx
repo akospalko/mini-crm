@@ -1,5 +1,6 @@
 // Document to store project's svg-s as components
 import {ReactElement, CSSProperties } from "react";
+import testID from "../../data/data_test_id.json";
 
 // TYPES
 type IconWrapperStyleType = {
@@ -18,17 +19,13 @@ type IconComponentType = {
 
 // ICON WRAPPER
 function IconWrapper ({children, wrapperCustomStyle}: IconWrapperStyleType): ReactElement | ReactElement[] {
-  const wrapperStyle = {
-    display: "flex", 
-    justifyContent:"center", 
-    alignItems:"center",
-    width: '100%',
-    height: '100%',
-    ...wrapperCustomStyle
-  }
 
   return (
-    <div style={wrapperStyle}>
+    <div 
+      data-testid={testID["icon"]}
+      style={{...wrapperCustomStyle}}
+      className="flex justify-center items-center w-full h-full"
+    >
       {children}
     </div>
   )

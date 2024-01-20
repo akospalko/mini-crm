@@ -1,0 +1,22 @@
+{
+  "menu-backdrop": "menu-backdrop",
+  "menu-modal": "menu-modal",
+  "menu-button-container": "menu-button-container",
+  "menu-button": "menu-button",
+  "icon-close": "icon-close",
+  "menu-title": "menu-title",
+  "icon": "icon",
+  "button-menu-open": "button-menu-open",
+  "button-menu-close": "button-menu-close",
+  "button-form-submit": "button-form-submit",
+  "button-manage-item": "button-manage-item",
+  "form-element": "form-element",
+  "form-button-container": "form-button-container",
+  "empty-list": "empty-list",
+  "client-list-card": "client-list-card",
+  "management-client-item": "management-client-item",
+  "management-property-item": "management-property-item",
+
+  "data-action-edit": "data-action-edit",
+  "data-action-delete": "data-action-delete"
+}

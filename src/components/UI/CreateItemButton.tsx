@@ -1,5 +1,6 @@
 // Create client or property button
 import { PlusIcon } from "./SVG";
+import testID from "../../data/data_test_id.json";
 
 interface CreateItemButtonPropsI {
   title: string,
@@ -15,6 +16,7 @@ const CreateItemButton = ({title, changed}: CreateItemButtonPropsI) => {
   
   return (
     <button
+      data-testid={testID["button-menu-open"]}
       title={title}
       className="bg-gray-300 hover:bg-gray-400 text-gray-800 my-auto w-[50px] h-[50px] rounded select-none"
       onClick={changed}
