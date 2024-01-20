@@ -19,12 +19,11 @@ type IconComponentType = {
 
 // ICON WRAPPER
 function IconWrapper ({children, wrapperCustomStyle}: IconWrapperStyleType): ReactElement | ReactElement[] {
-
   return (
     <div 
       data-testid={testID["icon"]}
-      style={{...wrapperCustomStyle}}
       className="flex justify-center items-center w-full h-full"
+      style={{...wrapperCustomStyle}}
     >
       {children}
     </div>
@@ -33,9 +32,9 @@ function IconWrapper ({children, wrapperCustomStyle}: IconWrapperStyleType): Rea
 
 // ICON COMPONENTS
 // Plus / add
-export function PlusIcon({width, height, fill, stroke, strokeWidth}: IconComponentType): ReactElement | ReactElement[] {
+export function PlusIcon({width, height, fill, stroke, strokeWidth, wrapperCustomStyle}: IconComponentType): ReactElement | ReactElement[] {
   return (
-    <IconWrapper>
+    <IconWrapper wrapperCustomStyle={wrapperCustomStyle}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={width ||  "100%"}

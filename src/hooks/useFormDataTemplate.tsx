@@ -22,7 +22,7 @@ const useFormDataTemplate = () => {
         label: "Label",
         type: InputFieldTypesE.text,
         value: "",
-        required: false
+        required: true
       },
       type: {
         label: "Type",
