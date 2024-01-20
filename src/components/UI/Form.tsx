@@ -6,6 +6,7 @@ import useForm from "../../hooks/useForm";
 import useManagementOperations from "../../hooks/useManagementOperations";
 import useToggleMenu from "../../hooks/useToggleMenu";
 import text from "../../data/text.json";
+import testID from "../../data/data_test_id.json";
 
 interface FormPropsI {
   action: ACTIVE_MENU_ACTION_TYPE
@@ -17,7 +18,12 @@ const Form = ({action}: FormPropsI) => {
   const {formData} = useForm();
 
   // HOOK
-  const {createNewClient, createNewProperty, updateExistingClient, updateExistingProperty} = useManagementOperations();
+  const {
+    createNewClient, 
+    createNewProperty, 
+    updateExistingClient, 
+    updateExistingProperty
+  } = useManagementOperations();
 
   // HANDLERS
   // Generic form submission handler
@@ -71,8 +77,9 @@ const Form = ({action}: FormPropsI) => {
 
   return (
     <form 
-      className="flex flex-1 w-full flex-col gap-2"
+      data-testid={testID["form-element"]}
       onSubmit={activeHandler}
+      className="flex flex-1 w-full flex-col gap-2"
     >
       {Object.keys(formData).map((item: string) => {
         return (
@@ -87,8 +94,12 @@ const Form = ({action}: FormPropsI) => {
           />
         )
       })}
-      <div className="flex w-full my-8">
+      <div 
+        data-testid={testID["form-button-container"]}
+        className="flex w-full my-8"
+      >
         <button 
+          data-testid={testID["button-form-submit"]}
           className="w-[100px] h-[50px] bg-gray-700 mx-auto rounded"
           type="submit"
         >{text["submit"]}</button>

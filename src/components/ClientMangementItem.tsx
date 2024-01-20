@@ -8,6 +8,9 @@ import {ClientItemI, PopulateFormDataWithActiveClientI, ClientFormTemplateI} fro
 import {deleteItemByID, findActiveArrayItem, populateFormWithActiveData} from "../utility/misc";
 import ManagementItemButton from "./UI/ManagementItemButton";
 import {DeleteIcon, EditIcon} from "./UI/SVG";
+import dataAction from "../data/data_test_id.json";
+import testID from "../data/data_test_id.json";
+
 
 interface ClientManagementI {
   itemData: ClientItemI
@@ -88,9 +91,13 @@ const ClientMangementItem = ({itemData}: ClientManagementI) => {
   const iconColor: string = " rgb(209 213 219)";
 
   return (
-    <div className="bg-slate-500 rounded grid grid-cols-[1fr,50px,50px] grid-rows-1 grid-flow-col h-[50px] overflow-hidden"> 
+    <div 
+      data-testid={testID["management-client-item"]}
+      className="bg-slate-500 rounded grid grid-cols-[1fr,50px,50px] grid-rows-1 grid-flow-col h-[50px] overflow-hidden"
+    > 
       <span className="flex items-center p-2 h-full">{itemData["full name"]}</span>
-      <ManagementItemButton 
+      <ManagementItemButton
+        dataAction={dataAction["data-action-edit"]} 
         changed={editClientHandler} 
         itemID={itemData.id} 
         title="Edit"
@@ -102,6 +109,7 @@ const ClientMangementItem = ({itemData}: ClientManagementI) => {
         />
       </ManagementItemButton>
       <ManagementItemButton 
+        dataAction={dataAction["data-action-delete"]}
         changed={deleteClientHandler} 
         itemID={itemData.id} 
         title="Delete"
