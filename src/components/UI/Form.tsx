@@ -72,37 +72,38 @@ const Form = ({action}: FormPropsI) => {
       activeHandler = editPropertyHandler;
       break;
     default:
-      throw new Error(`Undefined form submit handler ${action}. Provide proper action type!`);
+      throw new Error(`${text["error-unknown-action-type"]} ${action}`);
   }
 
   return (
     <form 
       data-testid={testID["form-element"]}
       onSubmit={activeHandler}
-      className="flex flex-1 w-full flex-col gap-2"
+      className="flex flex-1 w-full flex-col gap-5"
     >
-      {Object.keys(formData).map((item: string) => {
-        return (
-          <MultiTypeInput 
-            key={item}
-            name={item}
-            type={formData[item].type}
-            label={formData[item].label}
-            options={formData[item].type === InputFieldTypesE.dropdown ? (formData[item] as DropdownFormFieldI).options : []}
-            value={formData[item].value}
-            required={formData[item].required} 
-          />
-        )
-      })}
+      {Object.keys(formData).map((item: string) => (
+        <MultiTypeInput 
+          key={item}
+          name={item}
+          type={formData[item].type}
+          label={formData[item].label}
+          options={formData[item].type === InputFieldTypesE.dropdown ? (formData[item] as DropdownFormFieldI).options : []}
+          value={formData[item].value}
+          required={formData[item].required} 
+        />
+      ))}
       <div 
         data-testid={testID["form-button-container"]}
-        className="flex w-full my-8"
+        className="flex w-full my-4"
       >
         <button 
           data-testid={testID["button-form-submit"]}
-          className="w-[100px] h-[50px] bg-gray-700 mx-auto rounded"
+          className="w-[160px] h-[60px] lg:w-[125px] lg:h-[50px] bg-color_accent hover:bg-color_accent_secondary focus:outline-none focus-visible:outline-2 focus-visible:outline-color_accent
+          focus-visible:outline-offset-2 m-auto text-xl font-medium rounded"
           type="submit"
-        >{text["submit"]}</button>
+        >
+          <span className="text-lg text-color_1 font-medium font-roboto">{text["submit"]}</span>
+        </button>
       </div>
     </form>
   )

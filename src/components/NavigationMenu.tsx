@@ -15,19 +15,20 @@ const NavigationMenu = () => {
   const {isHovered, handleHover, handleLeave} = useHover();
 
   // STYLE
-  const activeLinkStyle: string = "flex justify-center items-center text-center w-[40px] h-[40px] cursor-default select-none rounded";
-  const inactiveLinkStyle: string = "flex justify-center items-center w-[40px] h-[40px] text-center select-none rounded";
+  const activeLinkStyle: string = "flex justify-center items-center text-center w-[40px] h-[40px] cursor-default select-none rounded outline-none";
+  const inactiveLinkStyle: string = "flex justify-center items-center w-[40px] h-[40px] text-center select-none rounded focus-visible-style";
   const iconSize: string = "30px";
-  const iconColor: string = "var(--color_3)";
+  const iconColor: string = "var(--color_4)";
   const iconColorActive: string = "var(--color_accent)";
   const iconColorHovered: string = "var(--color_accent_secondary)";
 
   return (
-    <div className="fixed flex items-center lg:flex-col top-0 lg:static h-56px lg:h-[calc(100vh-2*2rem)] w-full p-[0.5rem] bg-color_2 gap-5">
+    <div className="fixed flex items-center lg:flex-col top-0 lg:static h-56px lg:h-[calc(100vh-2*2rem)] w-full p-[0.5rem] bg-color_2 gap-2">
       <NavLink
         title="Clients"
         to="/clients"
         className={({isActive}) => isActive ? activeLinkStyle : inactiveLinkStyle}
+        tabIndex={isClientsActive ? -1 : 1}
         onMouseEnter={() => handleHover(HOVERED_BUTTONS.CLIENTS_PAGE_BUTTON)}
         onMouseLeave={() => handleLeave(HOVERED_BUTTONS.CLIENTS_PAGE_BUTTON)}
       > 
@@ -41,6 +42,7 @@ const NavigationMenu = () => {
         title="Manage Clients"
         to="/manage-clients"
         className={({isActive}) => isActive ? activeLinkStyle : inactiveLinkStyle}
+        tabIndex={isManageClientsActive ? -1 : 1}
         onMouseEnter={() => handleHover(HOVERED_BUTTONS.MANAGE_CLIENTS_PAGE_BUTTON)}
         onMouseLeave={() => handleLeave(HOVERED_BUTTONS.MANAGE_CLIENTS_PAGE_BUTTON)}
       > 
@@ -54,6 +56,7 @@ const NavigationMenu = () => {
         title="Manage Properties"
         to="/manage-properties"
         className={({isActive}) => isActive ? activeLinkStyle : inactiveLinkStyle}
+        tabIndex={isManagePropertiesActive ? -1 : 1}
         onMouseEnter={() => handleHover(HOVERED_BUTTONS.MANAGE_PROPERTIES_PAGE_BUTTON)}
         onMouseLeave={() => handleLeave(HOVERED_BUTTONS.MANAGE_PROPERTIES_PAGE_BUTTON)}
       >

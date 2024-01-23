@@ -54,7 +54,7 @@ const MultiTypeInput = ({name, label, type, value, options, required}: MultiType
       />
       break;
     default: 
-      throw new Error(`Unknown input field tpe: "${type}". Specify a valid input field type!`);
+      throw new Error(`text["error-unknown-action-type"]: ${type}`);
   }
   
   return inputField;
