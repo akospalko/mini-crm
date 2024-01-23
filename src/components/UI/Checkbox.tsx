@@ -19,18 +19,16 @@ const Checkbox = ({name, label, checkValue, readOnly, required}: CheckboxPropsI)
   };
 
   return (
-    <div className="flex justify-center w-full h-[70px]">
-      <label className="flex items-center h-full">
-        {label && label}
-      </label>
-      <input
-        className="p-1 rounded w-[25px] h-[25px] mx-4 my-auto"
-        type="checkbox"
-        checked={required ? required : checkValue}
-        onChange={handleCheckboxChange}
-        disabled={required ? required : readOnly}
-      />
-    </div>
+      <div title={name} className="flex items-center justify-center self-center w-[200px] h-[75px] truncate">
+        {label && <label className="w-[150px] mr-2 truncate capitalize">{label}</label>}
+        <input
+          className="flex w-[30px] h-[30px] rounded focus-visible-style"
+          type="checkbox"
+          checked={required ? required : checkValue}
+          onChange={handleCheckboxChange}
+          disabled={required ? required : readOnly}
+        />
+      </div>
   );
 };
 

@@ -2,6 +2,7 @@
 import {ChangeEvent} from "react";
 import {JobPositionsE} from "../../types/types";
 import useUpdateFormDataValue from "../../hooks/useUpdateFormDataValue";
+import Label from "./Label";
 
 interface DropdownProps {
   name: string,
@@ -10,7 +11,7 @@ interface DropdownProps {
   value: JobPositionsE,
 }
 
-const Dropdown = ({ name, label, options, value }: DropdownProps) => {
+const Dropdown = ({name, label, options, value}: DropdownProps) => {
   // HOOK
   const updateFormDataValue = useUpdateFormDataValue();
   
@@ -22,10 +23,10 @@ const Dropdown = ({ name, label, options, value }: DropdownProps) => {
   };
 
   return (
-    <div className="grid grid-rows-[1fr 1fr] w-full h-[70px]">
-      {label && <label className="flex items-center w-full h-[35px]">{label}</label>}
+    <div className="grid grid-rows-[1fr 1fr] w-full h-[75px]">
+      {label && <Label content={label} elemTitle={name}/>}
       <select 
-        className="h-[35px] p-1 rounded bg-slate-400 text-gray-900"
+        className="flex h-[40px] bg-color_6 text-color_4 p-2 rounded focus-visible-style"
         value={value} 
         onChange={dropdownChangeHandler}
       >

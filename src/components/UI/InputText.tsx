@@ -2,6 +2,7 @@
 import {ChangeEvent} from "react";
 import useForm from "../../hooks/useForm";
 import {ClientFormTemplateI, PropertyFormTemplateI, InputFieldTypesE} from "../../types/types";
+import Label from "./Label";
 
 interface InputTextPropsI {
   name: string,
@@ -29,12 +30,16 @@ const InputText = ({name, type, label, value, required}: InputTextPropsI) => {
     });
   };
   
+  // STYLE
+  const inputFocusVisibleStyle: string = `focus:outline-none focus-visible:outline-2 focus-visible:outline-color_accent
+  focus-visible:outline-offset-2`;
+  
   // JSX
   const textElement = (
-    <div className="grid grid-rows-[1fr 1fr] w-full h-[70px]">
-      {label && <label className="flex items-center w-full h-[35px]">{label}</label>}
+    <div className="grid grid-rows-[1fr 1fr] w-full h-[75px]">
+      {label && <Label content={label} elemTitle={name}/>}
       <input 
-        className="h-[35px] p-1 rounded bg-slate-400 text-gray-900"
+        className={`h-[40px] bg-color_6 text-color_4 p-2 rounded ${inputFocusVisibleStyle}`}
         name={name}
         type={type}
         value={value} 
@@ -46,9 +51,9 @@ const InputText = ({name, type, label, value, required}: InputTextPropsI) => {
 
   const textareaElement = (
     <div className="grid grid-rows-[1fr auto] w-full min-h-[150px]">
-      {label && <label className="flex items-center w-full h-[35px]">{label}</label>}
+      {label && <Label content={label} elemTitle={name}/>}
       <textarea 
-        className="w-full min-h-[115px] h-[115px] resize-y rounded p-1 bg-slate-400 text-gray-900"
+        className={`w-full min-h-[115px] h-[115px] resize-y bg-color_6 text-color_4 rounded p-2 ${inputFocusVisibleStyle}`}
         name={name}
         value={value} 
         onChange={inputChangeHandler} 

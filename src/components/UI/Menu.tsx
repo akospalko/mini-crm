@@ -7,6 +7,7 @@ import {ClientFormTemplateI, PropertyFormTemplateI} from "../../types/types";
 import Form from "./Form";
 import {CloseIcon} from "./SVG";
 import testID from "../../data/data_test_id.json";
+import text from "../../data/text.json";
 
 const Menu = () => {
   // CONTEXT
@@ -30,69 +31,81 @@ const Menu = () => {
   }, []); 
 
   // STYLE 
-  const headerStyle: string = "text-3xl";
+  const headerStyle: string = "text-3xl my-8";
   const buttonSize: string = "15px";
-  const buttonColor: string = "rgb(148 163 184)";
+  const buttonColor: string = "var(--color_accent)";
 
   // JSX
+  // Reusable menu header
+  const menuHeader = (content: string) => (
+    <h3
+      data-testid={testID["menu-title"]}
+      className={headerStyle}
+    > {content}
+    </h3>
+  )
+
   const createClientMenu: ReactElement = (
     <>
-      <h3
-        data-testid={testID["menu-title"]}
-        className={headerStyle}> Create client </h3>
+      {menuHeader(`${text["title-create"]} ${text["client"]}`)}
       <Form action={ACTIVE_MENU_ACTION_TYPE.CREATE_CLIENT}/>  
     </>
   )
 
   const editClientMenu: ReactElement = (
     <>
-      <h3
-        data-testid={testID["menu-title"]}
-        className={headerStyle}>Edit client</h3>
+      {menuHeader(`${text["title-edit"]} ${text["client"]}`)}
       <Form action={ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT}/>  
     </>
   )
 
+  // const viewClientMenu: ReactElement = (
+  //   <>
+  //     {menuHeader(`${text["title-view"]} ${text["client"]}`)}
+  //     <ClientCardMenu/>
+  //   </>
+  // )
+
   const createPropertyMenu: ReactElement = (
     <>
-      <h3
-        data-testid={testID["menu-title"]}
-        className={headerStyle}>Create property</h3>
+      {menuHeader(`${text["title-create"]} ${text["property"]}`)}
       <Form action={ACTIVE_MENU_ACTION_TYPE.CREATE_PROPERTY}/>  
     </>
   )
 
   const editPropertyMenu: ReactElement = (
     <>
-      <h3
-        data-testid={testID["menu-title"]}
-        className={headerStyle}>Edit property</h3>
+      {menuHeader(`${text["title-edit"]} ${text["property"]}`)}
       <Form action={ACTIVE_MENU_ACTION_TYPE.EDIT_PROPERTY}/>  
     </>
   )
 
-  let displayedMenu;
+  // Get menu content
+  let menu: ReactElement = <></>;
   switch(menuContent) {
     case ACTIVE_MENU_ACTION_TYPE.CREATE_CLIENT: 
-      displayedMenu = createClientMenu;
+      menu = createClientMenu;
       break;
     case ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT:
-      displayedMenu = editClientMenu;
+      menu = editClientMenu;
       break;
+    // case ACTIVE_MENU_ACTION_TYPE.VIEW_CLIENT:
+    //   menu = viewClientMenu;
+    //   break;
     case ACTIVE_MENU_ACTION_TYPE.CREATE_PROPERTY:
-      displayedMenu = createPropertyMenu;
+      menu = createPropertyMenu;
       break;
     case ACTIVE_MENU_ACTION_TYPE.EDIT_PROPERTY:
-      displayedMenu = editPropertyMenu;
+      menu = editPropertyMenu;
       break;
     default: 
-      throw new Error(`Undefined menu content (${menuContent}). Provived proper action type!`)
+      throw new Error(`${text["error-unknown-action-type"]} ${menuContent}`)
   }
   
   return (
     <div 
       data-testid={testID["menu-backdrop"]}
-      className="fixed top-0 bottom-0 left-0 right-0 bg-gray-700 bg-opacity-90"
+      className="fixed top-0 bottom-0 left-0 right-0 bg-color_1 bg-opacity-90 z-10"
       onClick={() => {
         toggleModal(false);
         setFormData({} as ClientFormTemplateI | PropertyFormTemplateI)
@@ -100,7 +113,7 @@ const Menu = () => {
     >
       <div 
         data-testid={testID["menu-modal"]}
-        className="flex w-[450px] flex-col items-center bg-gray-800 h-full m-0 mx-auto p-4 overflow-y-scroll"
+        className="flex w-full lg:w-[450px] flex-col items-center bg-color_2 h-full m-0 mx-auto p-4 overflow-y-scroll"
         onClick={e => e.stopPropagation()}
       >
         <div 
@@ -109,7 +122,9 @@ const Menu = () => {
         > 
           <button 
             data-testid={testID["button-menu-close"]}
-            className="bg-gray-700 w-[40px] h-[40px] rounded"
+            title={text["close"]}
+            className="border-2 border-color_accent bg-transparent 
+            focus-visible-style w-[40px] h-[40px] rounded"
             onClick={() => {
               toggleModal(false)
               setFormData({} as ClientFormTemplateI | PropertyFormTemplateI)
@@ -122,7 +137,7 @@ const Menu = () => {
             /> 
           </button>
         </div>
-        {displayedMenu}
+        {menu}
       </div>
     </div>
   )

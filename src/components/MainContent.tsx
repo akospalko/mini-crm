@@ -40,9 +40,9 @@ const MainContent = () => {
   }
 
   return (
-    <div className="grid grid-rows-[100px,1fr] grid-cols-1 justify-center w-full h-full overflow-y-scroll pr-5">
-      <div className="flex h-full w-full  rounded-bl rounded-br pb-0 overflow-hidden">
-        <h2 className="flex justify-center items-center h-full w-full text-3xl text-center bg-slate-500 text-gray-300">{activeTitle}</h2>
+    <div className="grid flex-1 grid-rows-[100px,1fr] grid-cols-1 justify-center w-full min-h-full lg:overflow-y-scroll bg-color_1 px-5 pb-5 lg:p-5 lg:pl-0 gap-5 lg:gap-5">
+      <div className="flex h-full w-full rounded lg:rounded-bl lg:rounded-br pb-0 overflow-hidden">
+        <h2 className="flex justify-center items-center h-full w-full text-3xl text-center bg-color_2 text-color_4 select-none">{activeTitle}</h2>
       </div>
       <Suspense fallback={<LoaderMainContent/>}>
         <Routes>

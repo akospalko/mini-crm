@@ -13,7 +13,7 @@ const ClientList = ({data}: ClientListPropsI) => {
   const displayedList = data?.map((client: ClientItemI) => (<ClientCard key={client.id} clientData={client}/>));
 
   return (
-    <div data-testid="client-list" className="flex flex-col w-full gap-5 py-5">
+    <div data-testid="client-list" className="flex flex-col w-full gap-5">
       {data.length > 0 ? displayedList : <EmptyList/>}
     </div>
   );

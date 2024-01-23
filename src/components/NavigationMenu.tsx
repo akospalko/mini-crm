@@ -1,7 +1,8 @@
 // Navigate bwt components
 import {NavLink, useMatch} from "react-router-dom";
 import {DisplayClientIcon, ManagePropertiesIcon, ManageClientIcon} from "./UI/SVG";
-import {PAGE_ROUTES} from "../types/actionTypes";
+import {HOVERED_BUTTONS, PAGE_ROUTES} from "../types/actionTypes";
+import useHover from "../hooks/useHover";
 
 const NavigationMenu = () => {
   // ROUTES
@@ -10,46 +11,59 @@ const NavigationMenu = () => {
   const isManageClientsActive = useMatch(PAGE_ROUTES.MANAGE_CLIENTS);
   const isManagePropertiesActive = useMatch(PAGE_ROUTES.MANAGE_PROPERTIES);
 
+  // HOOK
+  const {isHovered, handleHover, handleLeave} = useHover();
+
   // STYLE
-  const activeLinkStyle: string = "flex justify-center items-center text-center w-[40px] h-[40px] bg-gray-800 text-gray-300 cursor-default select-none rounded";
-  const inactiveLinkStyle: string = "flex justify-center items-center w-[40px] h-[40px] text-center hover:bg-gray-400 bg-gray-300 hover:text-gray-300 text-gray-900 select-none rounded";
-  const iconSize: string = "25px";
-  const iconColor: string = "rgb(31 41 55)";
-  const iconColorActive: string = "rgb(209 213 219)";
+  const activeLinkStyle: string = "flex justify-center items-center text-center w-[40px] h-[40px] cursor-default select-none rounded outline-none";
+  const inactiveLinkStyle: string = "flex justify-center items-center w-[40px] h-[40px] text-center select-none rounded focus-visible-style";
+  const iconSize: string = "30px";
+  const iconColor: string = "var(--color_4)";
+  const iconColorActive: string = "var(--color_accent)";
+  const iconColorHovered: string = "var(--color_accent_secondary)";
 
   return (
-    <div className="bg-slate-500 flex items-center h-[calc(100vh-2*2rem)] gap-5 flex-col w-full p-[0.5rem]">
+    <div className="fixed flex items-center lg:flex-col top-0 lg:static h-56px lg:h-[calc(100vh-2*2rem)] w-full p-[0.5rem] bg-color_2 gap-2">
       <NavLink
         title="Clients"
         to="/clients"
         className={({isActive}) => isActive ? activeLinkStyle : inactiveLinkStyle}
+        tabIndex={isClientsActive ? -1 : 1}
+        onMouseEnter={() => handleHover(HOVERED_BUTTONS.CLIENTS_PAGE_BUTTON)}
+        onMouseLeave={() => handleLeave(HOVERED_BUTTONS.CLIENTS_PAGE_BUTTON)}
       > 
         <DisplayClientIcon
-         width={iconSize}
-         height={iconSize}
-         fill={isClientsActive ? iconColorActive : iconColor}         
+          width={iconSize}
+          height={iconSize}
+          fill={isClientsActive ? iconColorActive : isHovered[HOVERED_BUTTONS.CLIENTS_PAGE_BUTTON] ? iconColorHovered : iconColor}         
         />
       </NavLink>
       <NavLink
         title="Manage Clients"
         to="/manage-clients"
         className={({isActive}) => isActive ? activeLinkStyle : inactiveLinkStyle}
+        tabIndex={isManageClientsActive ? -1 : 1}
+        onMouseEnter={() => handleHover(HOVERED_BUTTONS.MANAGE_CLIENTS_PAGE_BUTTON)}
+        onMouseLeave={() => handleLeave(HOVERED_BUTTONS.MANAGE_CLIENTS_PAGE_BUTTON)}
       > 
         <ManageClientIcon
           width={iconSize}
           height={iconSize}
-          fill={isManageClientsActive ? iconColorActive : iconColor}  
+          fill={isManageClientsActive ? iconColorActive : isHovered[HOVERED_BUTTONS.MANAGE_CLIENTS_PAGE_BUTTON] ? iconColorHovered : iconColor}  
         />
       </NavLink>
       <NavLink
         title="Manage Properties"
         to="/manage-properties"
         className={({isActive}) => isActive ? activeLinkStyle : inactiveLinkStyle}
+        tabIndex={isManagePropertiesActive ? -1 : 1}
+        onMouseEnter={() => handleHover(HOVERED_BUTTONS.MANAGE_PROPERTIES_PAGE_BUTTON)}
+        onMouseLeave={() => handleLeave(HOVERED_BUTTONS.MANAGE_PROPERTIES_PAGE_BUTTON)}
       >
         <ManagePropertiesIcon
           width={iconSize}
           height={iconSize}
-          fill={isManagePropertiesActive ? iconColorActive : iconColor}  
+          fill={isManagePropertiesActive ? iconColorActive : isHovered[HOVERED_BUTTONS.MANAGE_PROPERTIES_PAGE_BUTTON] ? iconColorHovered : iconColor}  
         />
       </NavLink>
     </div>

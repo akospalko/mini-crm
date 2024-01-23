@@ -1,7 +1,5 @@
 // Manage listed clients: read, create, edit, delete
 import {memo} from "react";
-import ClientMangementItem from "./ClientMangementItem";
-import PropertyManagementItem from "./PropertyManagementItem";
 import CreateItemButton from "./UI/CreateItemButton";
 import useForm from "../hooks/useForm";
 import useToggleMenu from "../hooks/useToggleMenu";
@@ -9,7 +7,10 @@ import useFormDataTemplate from "../hooks/useFormDataTemplate";
 import {ACTIVE_MANAGEMENT, ACTIVE_MENU_ACTION_TYPE} from "../types/actionTypes";
 import {ClientItemI, PropertyItemI, ClientFormTemplateI, PropertyFormTemplateI} from "../types/types";
 import EmptyList from "./EmptyList";
+import MangementItem from "./MangementItem";
+import text from "../data/text.json";
 
+// Interface
 interface ManagementIProps {
   data: ClientItemI[] | PropertyItemI[]
   activeManagementTab: ACTIVE_MANAGEMENT
@@ -53,10 +54,16 @@ const Management = ({data, activeManagementTab}: ManagementIProps) => {
 
     switch (activeManagementTab) {
       case ACTIVE_MANAGEMENT.CLIENT_MANAGEMENT:
-        activeContent = <ClientMangementItem key={item.id} itemData={item as ClientItemI}/>;
+        activeContent = <MangementItem 
+          key={item.id} 
+          itemData={item as ClientItemI}
+          activeManagement={ACTIVE_MANAGEMENT.CLIENT_MANAGEMENT}
+        />;
         break;
       case ACTIVE_MANAGEMENT.PROPERTY_MANAGEMENT:
-        activeContent = <PropertyManagementItem key={item.id} itemData={item as PropertyItemI} />;
+          activeContent = <MangementItem key={item.id} itemData={item as PropertyItemI} 
+          activeManagement={ACTIVE_MANAGEMENT.PROPERTY_MANAGEMENT}
+        />;
         break;
       default:
         activeContent = <span key={item.id}>Error</span>;
@@ -66,10 +73,13 @@ const Management = ({data, activeManagementTab}: ManagementIProps) => {
   });
 
   return (
-    <div className="grid grid-rows-[50px,1fr] grid-cols-1 gap-5 pt-5">
-      <CreateItemButton changed={propertyMenuHandler} title="Create"/>
+    <div className="grid grid-rows-[50px,1fr] grid-cols-1 gap-5">
+      <CreateItemButton 
+        title={text["title-create"]}
+        changed={propertyMenuHandler} 
+      />
       <div className="flex flex-col w-full gap-5">
-        {data?.length ? tabContent : <EmptyList/> }
+        {data?.length ? tabContent : <EmptyList/>}
       </div>
     </div>
   )

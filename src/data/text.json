@@ -8,10 +8,18 @@
   "title-content-properties-management": "Properties Management",
   "title-client-card-basic-info": "Basic info",
   "title-client-card-properties": "Properties",
+  "title-create": "Create", 
+  "title-edit": "Edit", 
+  "title-view": "View",
+  "title-delete": "Delete", 
+  "client": "Client",
+  "property": "Property",
+  "close": "Close",
   "content-title-content-unavailable": "Content Unavailable",
   "empty-list": "There is nothing to display",
   "error-unknown-action-type": "Unknown action type",
   "error-action-payload-missing": "Action payload is missing for:",
   "error-fetching-data": "Error fetching data:",
+  "error-invalid-argument": "Invalid argument. Expected a boolean value, but received:",
   "loader": "LOADING..."
 }

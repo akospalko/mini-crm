@@ -2,6 +2,7 @@
 import {ChangeEvent} from "react";
 import useForm from "../../hooks/useForm";
 import {ClientFormTemplateI, PropertyFormTemplateI} from "../../types/types";
+import Label from "./Label";
 
 interface DateInputProps {
   value: string,
@@ -29,10 +30,10 @@ const DateInput = ({value, name, label, required}: DateInputProps) => {
   }
 
   return (
-    <div className="grid grid-rows-[1fr 1fr] w-full h-[70px]">
-      {label && <label className="flex items-center w-full h-[35px]">{label}</label>}
+    <div className="grid grid-rows-[1fr 1fr] w-full h-[75px]">
+      {label && <Label content={label} elemTitle={name}/>}
       <input 
-        className="dark:[color-scheme:light] text-lg h-[35px] p-1 rounded bg-slate-400 text-gray-900"
+        className="h-[40px] bg-color_6 text-color_4 p-1 rounded focus-visible-style"
         type="date" 
         name={name} 
         value={value} 
