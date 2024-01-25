@@ -1,6 +1,6 @@
 // State to store raw form data
-import { createContext, useState } from "react";
-import { ChildrenType, ClientFormTemplateI, PropertyFormTemplateI } from "../types/types";
+import {createContext, useState} from "react";
+import {ChildrenType, ClientFormTemplateI, PropertyFormTemplateI} from "../types/types";
 
 // ---------CONTEXT LOGIC----------
 // INTERFACE
