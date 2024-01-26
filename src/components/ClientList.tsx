@@ -1,12 +1,8 @@
 // Display a list of clients: full (default) or filtered (based on role)
 import {memo} from "react";
 import ClientCard from "./ClientCard";
-import {ClientItemI} from "../types/types";
+import {ClientItemI, ClientListPropsI} from "../types/types";
 import EmptyList from "./EmptyList";
-
-interface ClientListPropsI {
-  data: ClientItemI[]
-}
 
 const ClientList = ({data}: ClientListPropsI) => {
   // JSX
