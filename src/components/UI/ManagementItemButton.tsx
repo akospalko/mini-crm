@@ -1,13 +1,6 @@
 // Control Buttons for management item components
-import { ReactNode } from "react"
 import testID from "../../data/data_test_id.json"
-
-interface ManagementItemButtonPropsI {
-  children: ReactNode
-  changed: () => void
-  title: string
-  dataAction: string
-}
+import { ManagementItemButtonPropsI } from "../../types/types"
 
 const ManagementItemButton = ({
   changed,

@@ -1,6 +1,6 @@
 // Menu/modal toggler context: states, handlers
 import { createContext, useState } from "react"
-import { ChildrenType } from "../types/types"
+import { ChildrenI } from "../types/types"
 import { UseToggleMenuContextI } from "../types/types"
 import { modalScrollLock } from "../utility/modalScrollLock"
 import { ACTIVE_MENU_ACTION_TYPE } from "../types/actionTypes"
@@ -45,7 +45,7 @@ const initContextState: UseToggleMenuContextI = {
 const ToggleMenuContext = createContext<UseToggleMenuContextI>(initContextState)
 
 // ----------CREATE PROVIDER----------
-export const ToggleMenuProvider = ({ children }: ChildrenType) => {
+export const ToggleMenuProvider = ({ children }: ChildrenI) => {
   return (
     <ToggleMenuContext.Provider value={useToggleMenuContext()}>
       {children}

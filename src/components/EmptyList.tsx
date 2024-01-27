@@ -1,12 +1,9 @@
 // Reusable empty list element
 import text from "../data/text.json"
 import testID from "../data/data_test_id.json"
+import { EmptyListIProps } from "../types/types"
 
-interface EmptyListI {
-  content?: string
-}
-
-const EmptyList = ({ content }: EmptyListI) => {
+const EmptyList = ({ content }: EmptyListIProps) => {
   return (
     <div
       data-testid={testID["empty-list"]}

@@ -1,15 +1,8 @@
 // Date input field
 import { ChangeEvent } from "react"
 import useForm from "../../hooks/useForm"
-import { ClientFormTemplateI, PropertyFormTemplateI } from "../../types/types"
+import { ClientFormTemplateI, PropertyFormTemplateI, DateInputProps } from "../../types/types"
 import Label from "./Label"
-
-interface DateInputProps {
-  value: string
-  name: string
-  label: string
-  required: boolean
-}
 
 const DateInput = ({ value, name, label, required }: DateInputProps) => {
   // CONTEXT

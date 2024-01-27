@@ -1,12 +1,8 @@
 // Create client or property button
+import { CreateItemButtonPropsI } from "../../types/types"
 import { PlusIcon } from "./SVG"
 import testID from "../../data/data_test_id.json"
 import text from "../../data/text.json"
-
-interface CreateItemButtonPropsI {
-  title: string
-  changed: () => void
-}
 
 const CreateItemButton = ({ title, changed }: CreateItemButtonPropsI) => {
   // STYLE

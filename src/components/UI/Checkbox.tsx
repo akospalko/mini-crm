@@ -1,13 +1,6 @@
 // Reusable Checkbox component
 import useUpdateFormDataValue from "../../hooks/useUpdateFormDataValue"
-
-interface CheckboxPropsI {
-  name: string
-  label?: string
-  checkValue: boolean
-  readOnly?: boolean
-  required: boolean
-}
+import { CheckboxPropsI } from "../../types/types"
 
 const Checkbox = ({
   name,

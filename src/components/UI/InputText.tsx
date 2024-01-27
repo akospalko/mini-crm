@@ -5,16 +5,9 @@ import {
   ClientFormTemplateI,
   PropertyFormTemplateI,
   InputFieldTypesE,
+  InputTextPropsI,
 } from "../../types/types"
 import Label from "./Label"
-
-interface InputTextPropsI {
-  name: string
-  type: InputFieldTypesE.text | InputFieldTypesE.textarea
-  label: string
-  value: string
-  required: boolean
-}
 
 const InputText = ({ name, type, label, value, required }: InputTextPropsI) => {
   // CONTEXT

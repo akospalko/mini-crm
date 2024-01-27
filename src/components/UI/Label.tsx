@@ -1,8 +1,5 @@
 // Input field's reusable label
-interface LabelPropsI {
-  content: string
-  elemTitle: string
-}
+import { LabelPropsI } from "../../types/types"
 
 const Label = ({ content, elemTitle }: LabelPropsI) => {
   // STYLE
