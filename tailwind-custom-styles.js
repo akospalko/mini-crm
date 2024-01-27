@@ -1,5 +1,5 @@
 // Tailwind CSS plugin file
-import plugin from "tailwindcss/plugin";
+import plugin from "tailwindcss/plugin"
 
 export default plugin(({ addUtilities }) => {
   const newUtilities = {
@@ -10,7 +10,7 @@ export default plugin(({ addUtilities }) => {
       outline: "2px solid #67ad7c", // Use your accent color
       outlineOffset: "2px",
     },
-  };
+  }
 
-  addUtilities(newUtilities, ["responsive", "hover", "focus", "active"]);
-});
+  addUtilities(newUtilities, ["responsive", "hover", "focus", "active"])
+})

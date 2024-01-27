@@ -1,29 +1,32 @@
 // Document to store project's svg-s as components
-import {ReactElement, CSSProperties } from "react";
-import testID from "../../data/data_test_id.json";
+import { ReactElement, CSSProperties } from "react"
+import testID from "../../data/data_test_id.json"
 
 // TYPES
 type IconWrapperStyleType = {
-  children: ReactElement | ReactElement[],
-  wrapperCustomStyle?: CSSProperties 
+  children: ReactElement | ReactElement[]
+  wrapperCustomStyle?: CSSProperties
 }
 type IconComponentType = {
-  width?: string,
-  height?: string,
-  fill?: string,
-  fill2?: string,
-  stroke?: string,
-  strokeWidth?: string,
-  wrapperCustomStyle?: CSSProperties 
+  width?: string
+  height?: string
+  fill?: string
+  fill2?: string
+  stroke?: string
+  strokeWidth?: string
+  wrapperCustomStyle?: CSSProperties
 }
 
 // ICON WRAPPER
-function IconWrapper ({children, wrapperCustomStyle}: IconWrapperStyleType): ReactElement | ReactElement[] {
+function IconWrapper({
+  children,
+  wrapperCustomStyle,
+}: IconWrapperStyleType): ReactElement | ReactElement[] {
   return (
-    <div 
+    <div
       data-testid={testID["icon"]}
-      className="flex justify-center items-center w-full h-full"
-      style={{...wrapperCustomStyle}}
+      className="flex h-full w-full items-center justify-center"
+      style={{ ...wrapperCustomStyle }}
     >
       {children}
     </div>
@@ -32,32 +35,43 @@ function IconWrapper ({children, wrapperCustomStyle}: IconWrapperStyleType): Rea
 
 // ICON COMPONENTS
 // Plus / add
-export function PlusIcon({width, height, fill, stroke, strokeWidth, wrapperCustomStyle}: IconComponentType): ReactElement | ReactElement[] {
+export function PlusIcon({
+  width,
+  height,
+  fill,
+  stroke,
+  strokeWidth,
+  wrapperCustomStyle,
+}: IconComponentType): ReactElement | ReactElement[] {
   return (
     <IconWrapper wrapperCustomStyle={wrapperCustomStyle}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={width ||  "100%"}
+        width={width || "100%"}
         height={height || "100%"}
         viewBox="0 0 16 16"
       >
         <path
-          fill={fill || "#888" }
-          stroke={stroke || "#000" }
+          fill={fill || "#888"}
+          stroke={stroke || "#000"}
           strokeWidth={strokeWidth || "0.5"}
           d="M8 2a1 1 0 00-1 1v4H3a1 1 0 100 2h4v4a1 1 0 102 0V9h4a1 1 0 100-2H9V3a1 1 0 00-1-1z"
         ></path>
       </svg>
     </IconWrapper>
-  );
+  )
 }
 
-// Delete 
-export function DeleteIcon({width, height, fill}: IconComponentType): ReactElement | ReactElement[] {
+// Delete
+export function DeleteIcon({
+  width,
+  height,
+  fill,
+}: IconComponentType): ReactElement | ReactElement[] {
   return (
     <IconWrapper>
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1024 1024"
         width={width || "100%"}
         height={height || "100%"}
@@ -66,15 +80,19 @@ export function DeleteIcon({width, height, fill}: IconComponentType): ReactEleme
         <path d="M160 256H96a32 32 0 010-64h256V95.936a32 32 0 0132-32h256a32 32 0 0132 32V192h256a32 32 0 110 64h-64v672a32 32 0 01-32 32H192a32 32 0 01-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 01-32-32V416a32 32 0 0164 0v320a32 32 0 01-32 32zm192 0a32 32 0 01-32-32V416a32 32 0 0164 0v320a32 32 0 01-32 32z"></path>
       </svg>
     </IconWrapper>
-  );
+  )
 }
 
-// Edit 
-export function EditIcon({width, height, fill}: IconComponentType): ReactElement | ReactElement[] {
+// Edit
+export function EditIcon({
+  width,
+  height,
+  fill,
+}: IconComponentType): ReactElement | ReactElement[] {
   return (
     <IconWrapper>
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         width={width || "100%"}
         height={height || "100%"}
@@ -86,15 +104,19 @@ export function EditIcon({width, height, fill}: IconComponentType): ReactElement
         </g>
       </svg>
     </IconWrapper>
-  );
+  )
 }
 
-// Close  
-export function CloseIcon({width, height, fill}: IconComponentType): ReactElement | ReactElement[] {
+// Close
+export function CloseIcon({
+  width,
+  height,
+  fill,
+}: IconComponentType): ReactElement | ReactElement[] {
   return (
     <IconWrapper>
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 -0.5 21 21"
         width={width || "100%"}
         height={height || "100%"}
@@ -110,15 +132,19 @@ export function CloseIcon({width, height, fill}: IconComponentType): ReactElemen
         </g>
       </svg>
     </IconWrapper>
-  );
+  )
 }
 
-// Display Client Page  
-export function DisplayClientIcon({width, height, fill}: IconComponentType): ReactElement | ReactElement[] {
+// Display Client Page
+export function DisplayClientIcon({
+  width,
+  height,
+  fill,
+}: IconComponentType): ReactElement | ReactElement[] {
   return (
     <IconWrapper>
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         width={width || "100%"}
         height={height || "100%"}
@@ -130,15 +156,19 @@ export function DisplayClientIcon({width, height, fill}: IconComponentType): Rea
         </g>
       </svg>
     </IconWrapper>
-  );
+  )
 }
 
 // Manage Properties
-export function ManagePropertiesIcon({width, height, fill}: IconComponentType): ReactElement | ReactElement[] {
+export function ManagePropertiesIcon({
+  width,
+  height,
+  fill,
+}: IconComponentType): ReactElement | ReactElement[] {
   return (
     <IconWrapper>
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         width={width || "100%"}
         height={height || "100%"}
@@ -150,15 +180,19 @@ export function ManagePropertiesIcon({width, height, fill}: IconComponentType): 
         </g>
       </svg>
     </IconWrapper>
-  );
+  )
 }
 
 // Manage client
-export function ManageClientIcon({width, height, fill}: IconComponentType): ReactElement | ReactElement[] {
+export function ManageClientIcon({
+  width,
+  height,
+  fill,
+}: IconComponentType): ReactElement | ReactElement[] {
   return (
     <IconWrapper>
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         width={width || "100%"}
         height={height || "100%"}
@@ -170,5 +204,5 @@ export function ManageClientIcon({width, height, fill}: IconComponentType): Reac
         </g>
       </svg>
     </IconWrapper>
-  );
+  )
 }

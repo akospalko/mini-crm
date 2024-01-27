@@ -1,10 +1,10 @@
 // Custom hook to consume ToggleMenuContext & export
-import {useContext} from "react";
-import FormContext from "../context/formContext";
-import {UseFormContextType} from "../types/types";
+import { useContext } from "react"
+import FormContext from "../context/formContext"
+import { UseFormContextType } from "../types/types"
 
 const useForm = (): UseFormContextType => {
-  return useContext(FormContext);
+  return useContext(FormContext)
 }
 
-export default useForm;
+export default useForm

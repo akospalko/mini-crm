@@ -1,12 +1,12 @@
 // Loader for menu modal
-import text from "../data/text.json";
+import text from "../data/text.json"
 
 const LoaderMenu = () => {
   return (
-    <div className="fixed flex justify-center items-center top-0 bottom-0 left-0 right-0 bg-color_1 bg-opacity-90 z-10">
+    <div className="fixed bottom-0 left-0 right-0 top-0 z-10 flex items-center justify-center bg-color_1 bg-opacity-90">
       {text["loader"]}
     </div>
   )
 }
 
-export default LoaderMenu;
+export default LoaderMenu
