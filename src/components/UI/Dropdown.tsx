@@ -1,15 +1,8 @@
 // Dropdown input field for selecting job positions
 import { ChangeEvent } from "react"
-import { JobPositionsE } from "../../types/types"
+import { JobPositionsE, DropdownProps } from "../../types/types"
 import useUpdateFormDataValue from "../../hooks/useUpdateFormDataValue"
 import Label from "./Label"
-
-interface DropdownProps {
-  name: string
-  label: string
-  options: JobPositionsE[]
-  value: JobPositionsE
-}
 
 const Dropdown = ({ name, label, options, value }: DropdownProps) => {
   // HOOK

@@ -1,16 +1,12 @@
 // Reusable form component
 import MultiTypeInput from "./MultiTypeInput"
-import { DropdownFormFieldI, InputFieldTypesE } from "../../types/types"
+import { DropdownFormFieldI, InputFieldTypesE, FormPropsI } from "../../types/types"
 import { ACTIVE_MENU_ACTION_TYPE } from "../../types/actionTypes"
 import useForm from "../../hooks/useForm"
 import useManagementOperations from "../../hooks/useManagementOperations"
 import useToggleMenu from "../../hooks/useToggleMenu"
 import text from "../../data/text.json"
 import testID from "../../data/data_test_id.json"
-
-interface FormPropsI {
-  action: ACTIVE_MENU_ACTION_TYPE
-}
 
 const Form = ({ action }: FormPropsI) => {
   // CONTEXT

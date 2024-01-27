@@ -13,16 +13,12 @@ import {
   PropertyItemI,
   ClientFormTemplateI,
   PropertyFormTemplateI,
+  ManagementIProps,
 } from "../types/types"
 import EmptyList from "./EmptyList"
 import MangementItem from "./MangementItem"
 import text from "../data/text.json"
 
-// Interface
-interface ManagementIProps {
-  data: ClientItemI[] | PropertyItemI[]
-  activeManagementTab: ACTIVE_MANAGEMENT
-}
 
 const Management = ({ data, activeManagementTab }: ManagementIProps) => {
   // CONTEXTS

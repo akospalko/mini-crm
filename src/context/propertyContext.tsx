@@ -5,7 +5,7 @@ import {
   REDUCER_ACTION_TYPE_PROPERTY,
 } from "../types/actionTypes"
 import {
-  ChildrenType,
+  ChildrenI,
   UsePropertyContextType,
   PropertyItemI,
   PropertyStateI,
@@ -111,7 +111,7 @@ const initContextState: UsePropertyContextType = {
 // Create context
 const PropertyContext = createContext<UsePropertyContextType>(initContextState)
 // ----------CREATE PROVIDER----------
-export const PropertyProvider = ({ children }: ChildrenType) => {
+export const PropertyProvider = ({ children }: ChildrenI) => {
   return (
     <PropertyContext.Provider value={usePropertyContext(initPropertyState)}>
       {children}

@@ -13,6 +13,7 @@ import {
   ClientItemI,
   PopulateFormDataWithActiveClientI,
   PropertyItemI,
+  ClientManagementPropsI,
 } from "../types/types"
 import {
   deleteItemByID,
@@ -25,13 +26,7 @@ import dataAction from "../data/data_test_id.json"
 import testID from "../data/data_test_id.json"
 import text from "../data/text.json"
 
-// INTERFACE
-interface ClientManagementI {
-  itemData: ClientItemI | PropertyItemI
-  activeManagement: ACTIVE_MANAGEMENT
-}
-
-const MangementItem = ({ itemData, activeManagement }: ClientManagementI) => {
+const MangementItem = ({ itemData, activeManagement }: ClientManagementPropsI) => {
   // CONTEXT
   const {
     clients,

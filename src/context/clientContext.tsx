@@ -10,7 +10,7 @@ import {
   UseClientContextType,
   ClientContextReducerActionI,
   ClientStateI,
-  ChildrenType,
+  ChildrenI,
 } from "../types/types"
 import useFetchData from "./useFetchData"
 import text from "../data/text.json"
@@ -120,7 +120,7 @@ const initContextState: UseClientContextType = {
 // Create context
 const ClientsContext = createContext<UseClientContextType>(initContextState)
 // ----------CREATE PROVIDER----------
-export const ClientsProvider = ({ children }: ChildrenType) => {
+export const ClientsProvider = ({ children }: ChildrenI) => {
   return (
     <ClientsContext.Provider value={useClientContext(initClientState)}>
       {children}

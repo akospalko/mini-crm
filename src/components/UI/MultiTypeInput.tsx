@@ -2,21 +2,12 @@
 import {
   JobPositionsE,
   InputFieldTypesE,
-  PropertyTypeE,
+  MultiTypeInputPropsI,
 } from "../../types/types"
 import Dropdown from "./Dropdown"
 import InputText from "./InputText"
 import Checkbox from "./Checkbox"
 import DatePicker from "./DatePicker"
-
-interface MultiTypeInputPropsI {
-  name: string
-  type: InputFieldTypesE | PropertyTypeE
-  label: string
-  value: string | boolean | JobPositionsE
-  options: JobPositionsE[]
-  required: boolean
-}
 
 const MultiTypeInput = ({
   name,
