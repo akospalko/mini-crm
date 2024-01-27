@@ -1,35 +1,46 @@
 // Reusable Checkbox component
-import useUpdateFormDataValue from "../../hooks/useUpdateFormDataValue";
+import useUpdateFormDataValue from "../../hooks/useUpdateFormDataValue"
 
 interface CheckboxPropsI {
-  name: string,
+  name: string
   label?: string
-  checkValue: boolean,
-  readOnly?: boolean,
+  checkValue: boolean
+  readOnly?: boolean
   required: boolean
 }
 
-const Checkbox = ({name, label, checkValue, readOnly, required}: CheckboxPropsI) => {
+const Checkbox = ({
+  name,
+  label,
+  checkValue,
+  readOnly,
+  required,
+}: CheckboxPropsI) => {
   // HOOK
-  const updateFormDataValue = useUpdateFormDataValue();
-  
+  const updateFormDataValue = useUpdateFormDataValue()
+
   // HANDLER
   const handleCheckboxChange = () => {
-    updateFormDataValue(name, !checkValue);
-  };
+    updateFormDataValue(name, !checkValue)
+  }
 
   return (
-      <div title={name} className="flex items-center justify-center self-center w-[200px] h-[75px] truncate">
-        {label && <label className="w-[150px] mr-2 truncate capitalize">{label}</label>}
-        <input
-          className="flex w-[30px] h-[30px] rounded focus-visible-style"
-          type="checkbox"
-          checked={required ? required : checkValue}
-          onChange={handleCheckboxChange}
-          disabled={required ? required : readOnly}
-        />
-      </div>
-  );
-};
+    <div
+      title={name}
+      className="flex h-[75px] w-[200px] items-center justify-center self-center truncate"
+    >
+      {label && (
+        <label className="mr-2 w-[150px] truncate capitalize">{label}</label>
+      )}
+      <input
+        className="flex h-[30px] w-[30px] rounded focus-visible-style"
+        type="checkbox"
+        checked={required ? required : checkValue}
+        onChange={handleCheckboxChange}
+        disabled={required ? required : readOnly}
+      />
+    </div>
+  )
+}
 
-export default Checkbox;
+export default Checkbox

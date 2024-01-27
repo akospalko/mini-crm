@@ -1,75 +1,102 @@
-{"clients": [
-  {
-    "id": "C0000",
-    "full name": "John Doe",
-    "address": "123 Main St",
-    "phone": "+3112412400",
-    "note": "This is a sample note.",
-    "position": "Manager",
-    "properties": [{ "id": "P0000", "value": "red" }, { "id": "P0001", "value": "2000-02-01" }, { "id": "P0002", "value": true }]
-  },
-  {
-    "id": "C0001",
-    "full name": "Jane Doe",
-    "address": "456 Oak St",
-    "phone": "+3112412400",
-    "note": "Another sample note.",
-    "position": "Developer",
-    "properties": [{ "id": "P0000", "value": "green" }, { "id": "P0001", "value": "1995-05-21" }, { "id": "P0002", "value": true }]
-  },
-  {
-    "id": "C0002",
-    "full name": "Bob Smith",
-    "address": "789 Elm St",
-    "phone": "+3112412400",
-    "note": "Additional note here.",
-    "position": "CEO",
-    "properties": [{ "id": "P0000", "value": "blue" }, { "id": "P0001", "value": "1980-05-01" }, { "id": "P0002", "value": true }]
-  },
-  {
-    "id": "C0003",
-    "full name": "Alice Johnson",
-    "address": "321 Pine St",
-    "phone": "+3112412400",
-    "note": "A new sample note.",
-    "position": "Developer",
-    "properties": [{ "id": "P0000", "value": "yellow" }, { "id": "P0001", "value": "2005-11-15" }, { "id": "P0002", "value": true }]
-  },
-  {
-    "id": "C0004",
-    "full name": "Chris Brown",
-    "address": "654 Birch St",
-    "phone": "+3112412400",
-    "note": "Random note content.",
-    "position": "Developer",
-    "properties": [{ "id": "P0000", "value": "purple" }, { "id": "P0001", "value": "1990-08-08" }, { "id": "P0002", "value": true }]
-  },
-  {
-    "id": "C0005",
-    "full name": "Eva White",
-    "address": "987 Maple St",
-    "phone": "+3112412400",
-    "note": "Lorem ipsum dolor sit amet.",
-    "position": "Manager",
-    "properties": [{ "id": "P0000", "value": "orange" }, { "id": "P0001", "value": "1975-03-25" }, { "id": "P0002", "value": true }]
-  }
-], "properties": [
-  {
-    "id": "P0000",
-    "label": "favorite color",
-    "type": "text",
-    "required": false
-  },
-  {
-    "id": "P0001",
-    "label": "birthdate",
-    "type": "date",
-    "required": true
-  },
-  {
-    "id": "P0002",
-    "label": "permit required",
-    "type": "checkbox",
-    "required": true
-  }
-]}
+{
+  "clients": [
+    {
+      "id": "C0000",
+      "full name": "John Doe",
+      "address": "123 Main St",
+      "phone": "+3112412400",
+      "note": "This is a sample note.",
+      "position": "Manager",
+      "properties": [
+        { "id": "P0000", "value": "red" },
+        { "id": "P0001", "value": "2000-02-01" },
+        { "id": "P0002", "value": true }
+      ]
+    },
+    {
+      "id": "C0001",
+      "full name": "Jane Doe",
+      "address": "456 Oak St",
+      "phone": "+3112412400",
+      "note": "Another sample note.",
+      "position": "Developer",
+      "properties": [
+        { "id": "P0000", "value": "green" },
+        { "id": "P0001", "value": "1995-05-21" },
+        { "id": "P0002", "value": true }
+      ]
+    },
+    {
+      "id": "C0002",
+      "full name": "Bob Smith",
+      "address": "789 Elm St",
+      "phone": "+3112412400",
+      "note": "Additional note here.",
+      "position": "CEO",
+      "properties": [
+        { "id": "P0000", "value": "blue" },
+        { "id": "P0001", "value": "1980-05-01" },
+        { "id": "P0002", "value": true }
+      ]
+    },
+    {
+      "id": "C0003",
+      "full name": "Alice Johnson",
+      "address": "321 Pine St",
+      "phone": "+3112412400",
+      "note": "A new sample note.",
+      "position": "Developer",
+      "properties": [
+        { "id": "P0000", "value": "yellow" },
+        { "id": "P0001", "value": "2005-11-15" },
+        { "id": "P0002", "value": true }
+      ]
+    },
+    {
+      "id": "C0004",
+      "full name": "Chris Brown",
+      "address": "654 Birch St",
+      "phone": "+3112412400",
+      "note": "Random note content.",
+      "position": "Developer",
+      "properties": [
+        { "id": "P0000", "value": "purple" },
+        { "id": "P0001", "value": "1990-08-08" },
+        { "id": "P0002", "value": true }
+      ]
+    },
+    {
+      "id": "C0005",
+      "full name": "Eva White",
+      "address": "987 Maple St",
+      "phone": "+3112412400",
+      "note": "Lorem ipsum dolor sit amet.",
+      "position": "Manager",
+      "properties": [
+        { "id": "P0000", "value": "orange" },
+        { "id": "P0001", "value": "1975-03-25" },
+        { "id": "P0002", "value": true }
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "id": "P0000",
+      "label": "favorite color",
+      "type": "text",
+      "required": false
+    },
+    {
+      "id": "P0001",
+      "label": "birthdate",
+      "type": "date",
+      "required": true
+    },
+    {
+      "id": "P0002",
+      "label": "permit required",
+      "type": "checkbox",
+      "required": true
+    }
+  ]
+}

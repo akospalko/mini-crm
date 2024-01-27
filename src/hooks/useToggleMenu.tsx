@@ -1,10 +1,10 @@
 // Custom hook to consume ToggleMenuContext & export
-import {useContext} from "react";
-import ToggleMenuContext from "../context/toggleMenuContext";
-import {UseToggleMenuContextType} from "../types/types";
+import { useContext } from "react"
+import ToggleMenuContext from "../context/toggleMenuContext"
+import { UseToggleMenuContextType } from "../types/types"
 
 const useToggleMenu = (): UseToggleMenuContextType => {
-  return useContext(ToggleMenuContext);
+  return useContext(ToggleMenuContext)
 }
 
-export default useToggleMenu;
+export default useToggleMenu

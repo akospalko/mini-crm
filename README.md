@@ -5,10 +5,10 @@ A Mini CRM is a simple system for managing customer relationships, tailored for 
 ## Installation
 
 ```bash
-1. Install dependencies: 
+1. Install dependencies:
   npm install
-  
-2. Run app 
+
+2. Run app
   npm run dev
 
 3. Run local server (json-server)

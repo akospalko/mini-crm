@@ -1,12 +1,9 @@
 /** @type {import("tailwindcss").Config} */
 
-import customStyles from "./tailwind-custom-styles"; // Adjust the path as needed
+import customStyles from "./tailwind-custom-styles" // Adjust the path as needed
 
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {

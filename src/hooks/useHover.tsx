@@ -1,6 +1,6 @@
 // Handle hover enter and leave on element
-import {useState} from "react";
-import {HOVERED_BUTTONS} from "../types/actionTypes";
+import { useState } from "react"
+import { HOVERED_BUTTONS } from "../types/actionTypes"
 
 // INITIALIZER
 const hoveredStateInitializer = {
@@ -12,24 +12,26 @@ const hoveredStateInitializer = {
 // Custom hook for handling hover state
 const useHover = () => {
   // STATE
-  const [isHovered, setIsHovered] = useState<{[key in HOVERED_BUTTONS]: boolean}>(hoveredStateInitializer);
+  const [isHovered, setIsHovered] = useState<{
+    [key in HOVERED_BUTTONS]: boolean
+  }>(hoveredStateInitializer)
 
   // HANDLERS
   // Set button hover status to true
   const handleHover = (buttonName: HOVERED_BUTTONS) => {
-    setIsHovered((prevElements) => ({...prevElements, [buttonName]: true}));
-  };
-  
+    setIsHovered((prevElements) => ({ ...prevElements, [buttonName]: true }))
+  }
+
   // Set button hover status to false
   const handleLeave = (buttonName: HOVERED_BUTTONS) => {
-    setIsHovered((prevElements) => ({...prevElements, [buttonName]: false}));
-  };
+    setIsHovered((prevElements) => ({ ...prevElements, [buttonName]: false }))
+  }
 
   return {
     isHovered,
     handleHover,
-    handleLeave
-  };
-};
+    handleLeave,
+  }
+}
 
-export default useHover;
+export default useHover

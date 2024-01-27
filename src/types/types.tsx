@@ -1,64 +1,72 @@
-import {useClientContext} from "../context/clientContext";
-import {useFormContext} from "../context/formContext";
-import {usePropertyContext} from "../context/propertyContext";
-import {useToggleMenuContext} from "../context/toggleMenuContext";
-import {REDUCER_ACTION_TYPE_CLIENT} from "./actionTypes";
-import {ACTIVE_MENU_ACTION_TYPE, REDUCER_ACTION_TYPE_PROPERTY} from "./actionTypes";
+import { useClientContext } from "../context/clientContext"
+import { useFormContext } from "../context/formContext"
+import { usePropertyContext } from "../context/propertyContext"
+import { useToggleMenuContext } from "../context/toggleMenuContext"
+import { REDUCER_ACTION_TYPE_CLIENT } from "./actionTypes"
+import {
+  ACTIVE_MENU_ACTION_TYPE,
+  REDUCER_ACTION_TYPE_PROPERTY,
+} from "./actionTypes"
 
 // Collection of app related types, interfaces, enums
 // Property
 export enum PropertyTypeE {
-  text = "text", 
+  text = "text",
   date = "date",
-  checkbox = "checkbox" 
+  checkbox = "checkbox",
 }
 
 export interface PropertyItemI {
-  "id": string,
-  "label": string,
-  "type": PropertyTypeE
-  "required": boolean  
+  id: string
+  label: string
+  type: PropertyTypeE
+  required: boolean
 }
 
 // Property item type as an obj of objs
-export type PropertyItemRemappedT = Omit<PropertyItemI, 'id'>;
+export type PropertyItemRemappedT = Omit<PropertyItemI, "id">
 
 // Client
 export enum JobPositionsE {
-  CEO = "CEO", 
-  CTO = "CTO", 
+  CEO = "CEO",
+  CTO = "CTO",
   COO = "COO",
   Manager = "Manager",
   Developer = "Developer",
 }
 
 export interface ClientPropertyI {
-  id: string, // property item id
+  id: string // property item id
   value: string | boolean
 }
 
 export interface ClientItemI {
-  "id": string,
-  "full name": string,
-  "address": string,
-  "phone": string,
-  "note": string,
-  "position": JobPositionsE,
-  "properties": ClientPropertyI[],
-} 
+  id: string
+  "full name": string
+  address: string
+  phone: string
+  note: string
+  position: JobPositionsE
+  properties: ClientPropertyI[]
+}
 
-export type ClientKeys = keyof ClientItemI;
+export type ClientKeys = keyof ClientItemI
 
 export interface PopulateFormDataWithActiveClientI {
-  id?: string;
-  "full name"?: string;
-  address?: string;
-  phone?: string;
-  note?: string;
-  position?: JobPositionsE;
-  properties?: ClientPropertyI[];
-  [key: string]: string | JobPositionsE | ClientPropertyI[] | boolean | undefined;
-} 
+  id?: string
+  "full name"?: string
+  address?: string
+  phone?: string
+  note?: string
+  position?: JobPositionsE
+  properties?: ClientPropertyI[]
+  [key: string]:
+    | string
+    | JobPositionsE
+    | ClientPropertyI[]
+    | boolean
+    | undefined
+}
 
 export interface ClientWithoutIdAndPropertiesI
   extends Omit<ClientItemI, "id" | "properties"> {}
@@ -69,41 +77,43 @@ export enum ClientFormDataE {
   "phone" = "phone",
   "note" = "note",
   "position" = "position",
-} 
+}
 
 // clientContext.tsx
 export interface ClientStateI {
   newClient: ClientItemI
-  clients: ClientItemI[],
-  filteredClients: ClientItemI[],
+  clients: ClientItemI[]
+  filteredClients: ClientItemI[]
   activeClient: ClientItemI
 }
 
 export interface ClientContextReducerActionI {
-  type: REDUCER_ACTION_TYPE_CLIENT;
+  type: REDUCER_ACTION_TYPE_CLIENT
   payload:
-    | { newClient: ClientItemI } 
-    | { clients: ClientItemI[] } 
-    | { filteredClients: ClientItemI[] } 
-    | { activeClient: ClientItemI }; 
+    | { newClient: ClientItemI }
+    | { clients: ClientItemI[] }
+    | { filteredClients: ClientItemI[] }
+    | { activeClient: ClientItemI }
 }
 
-// propertyContext.tsx 
+// propertyContext.tsx
 export interface PropertyStateI {
-  newProperty: PropertyItemI,
-  property: PropertyItemI[],
+  newProperty: PropertyItemI
+  property: PropertyItemI[]
   activeProperty: PropertyItemI
 }
 
 export interface PropertyContextReducerActionI {
-  type: REDUCER_ACTION_TYPE_PROPERTY,
+  type: REDUCER_ACTION_TYPE_PROPERTY
   payload:
-  | { newProperty: PropertyItemI } 
-  | { property: PropertyItemI[] } 
-  | { activeProperty: PropertyItemI}; 
+    | { newProperty: PropertyItemI }
+    | { property: PropertyItemI[] }
+    | { activeProperty: PropertyItemI }
 }
 
-export interface ChildrenType {children?: React.ReactElement | React.ReactElement[]}
+export interface ChildrenType {
+  children?: React.ReactElement | React.ReactElement[]
+}
 export type UseClientContextType = ReturnType<typeof useClientContext>
 export type UsePropertyContextType = ReturnType<typeof usePropertyContext>
 export type UseFormContextType = ReturnType<typeof useFormContext>
@@ -116,72 +126,75 @@ export interface ClientCardPropsI {
 
 // toggleMenuContext.tsx
 export interface UseToggleMenuContextI {
-  isToggled: boolean,
-  menuContent: ACTIVE_MENU_ACTION_TYPE | "default",
-  toggleModal: (forcedValue: boolean) => void,
+  isToggled: boolean
+  menuContent: ACTIVE_MENU_ACTION_TYPE | "default"
+  toggleModal: (forcedValue: boolean) => void
   menuContentChangeHandler: (activeContent: ACTIVE_MENU_ACTION_TYPE) => void
 }
 
 // Form.tsx, form templates
 export interface DefaultFormFieldI {
-  type: InputFieldTypesE,
-  label: string,
-  value: string,
+  type: InputFieldTypesE
+  label: string
+  value: string
   required: boolean
 }
 
 export interface DropdownFormFieldI {
-  type: InputFieldTypesE,
-  label: string,
-  value: JobPositionsE,
-  options: JobPositionsE[],
+  type: InputFieldTypesE
+  label: string
+  value: JobPositionsE
+  options: JobPositionsE[]
   required: boolean
 }
 
 export interface TransformedFormFieldI {
   type: PropertyTypeE
-  label: string,
-  required: boolean,
+  label: string
+  required: boolean
   value: string | boolean
 }
 
 export interface ClientFormTemplateI {
-  [key: string]: DefaultFormFieldI | DropdownFormFieldI | TransformedFormFieldI,
-  "full name": DefaultFormFieldI,
-  "address": DefaultFormFieldI,
-  "phone": DefaultFormFieldI,
-  "note": DefaultFormFieldI,
-  "position": DropdownFormFieldI
+  [key: string]: DefaultFormFieldI | DropdownFormFieldI | TransformedFormFieldI
+  "full name": DefaultFormFieldI
+  address: DefaultFormFieldI
+  phone: DefaultFormFieldI
+  note: DefaultFormFieldI
+  position: DropdownFormFieldI
 }
 
 // useFormDataTemplate.tsx -> Property
 export interface PropertyLabelFieldI {
-  label: string,
-  type: InputFieldTypesE.text,
-  value: string,
+  label: string
+  type: InputFieldTypesE.text
+  value: string
   required: boolean
 }
 
 export interface PropertyTypeFieldI {
-  label: string,
-  type: InputFieldTypesE.dropdown,
-  value: PropertyTypeE,
-  options: PropertyTypeE[],
+  label: string
+  type: InputFieldTypesE.dropdown
+  value: PropertyTypeE
+  options: PropertyTypeE[]
   required: boolean
 }
 
 export interface PropertyRequiredFieldI {
-  label: string,
-  type: InputFieldTypesE.checkbox,
-  value: boolean,
+  label: string
+  type: InputFieldTypesE.checkbox
+  value: boolean
   required: boolean
 }
 
 export interface PropertyFormTemplateI {
-  [key: string]: PropertyLabelFieldI | PropertyTypeFieldI | PropertyRequiredFieldI,
-  "label": PropertyLabelFieldI,
-  "type": PropertyTypeFieldI,
-  "required": PropertyRequiredFieldI,
+  [key: string]:
+    | PropertyLabelFieldI
+    | PropertyTypeFieldI
+    | PropertyRequiredFieldI
+  label: PropertyLabelFieldI
+  type: PropertyTypeFieldI
+  required: PropertyRequiredFieldI
 }
 
 // Input.tsx, input type types
@@ -190,7 +203,7 @@ export enum InputFieldTypesE {
   date = "date",
   checkbox = "checkbox",
   dropdown = "dropdown",
-  textarea = "textarea"
+  textarea = "textarea",
 }
 
 // ClientList.tsx
