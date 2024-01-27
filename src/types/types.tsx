@@ -192,3 +192,8 @@ export enum InputFieldTypesE {
   dropdown = "dropdown",
   textarea = "textarea"
 }
+
+// ClientList.tsx
+export interface ClientListPropsI {
+  data: ClientItemI[]
+}
