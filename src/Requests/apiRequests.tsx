@@ -1,11 +1,12 @@
 import { HTTP_METHOD } from "../types/actionTypes"
 import axiosInstance from "./axiosInstance"
 import { AxiosResponse, AxiosError } from "axios"
+import { ClientItemI, PropertyItemI } from "../types/types"
 
 // INTERFACES
 interface ApiRequestResultI {
   loading: boolean
-  responseData: string[] | null // data resulting from the axios request // TODO: ADD PROPER TYPE
+  responseData: ClientItemI[] | PropertyItemI[] | null // data resulting from the axios request
   error: string | null
   status: number
 }
@@ -14,7 +15,7 @@ interface ApiRequestI {
   (
     method: HTTP_METHOD,
     url: string,
-    data: string[] | null
+    data: ClientItemI[] | PropertyItemI[] | null
   ): Promise<ApiRequestResultI>
 }
 
@@ -22,7 +23,7 @@ interface ApiRequestI {
 const apiRequest: ApiRequestI = async (
   method: HTTP_METHOD,
   url: string,
-  data: string[] | null
+  data: ClientItemI[] | PropertyItemI[] | null
 ) => {
   let loading: boolean = true
   try {
@@ -57,14 +58,14 @@ export const getClientById = async (id: string): Promise<ApiRequestResultI> => {
 }
 
 export const createClient = async (
-  userData: string[]
+  userData: ClientItemI[] | PropertyItemI[] | null
 ): Promise<ApiRequestResultI> => {
   return apiRequest(HTTP_METHOD.POST, "/client", userData)
 }
 
 export const updateClient = async (
   id: string,
-  updatedData: // TODO: ADD PROPER TYPE
+  updatedData: ClientItemI[]
 ): Promise<ApiRequestResultI> => {
   return apiRequest(HTTP_METHOD.PUT, `/client/${id}`, updatedData)
 }
@@ -78,23 +79,27 @@ export const getAllProperties = async (): Promise<ApiRequestResultI> => {
   return apiRequest(HTTP_METHOD.GET, "/property", null)
 }
 
-export const getPropertyById = async (id: string): Promise<ApiRequestResultI> => {
+export const getPropertyById = async (
+  id: string
+): Promise<ApiRequestResultI> => {
   return apiRequest(HTTP_METHOD.GET, `/property/${id}`, null)
 }
 
 export const createProperty = async (
-  userData: string[] // TODO: ADD PROPER TYPE
+  userData: ClientItemI[] | PropertyItemI[] | null
 ): Promise<ApiRequestResultI> => {
   return apiRequest(HTTP_METHOD.POST, "/property", userData)
 }
 
 export const updateProperty = async (
   id: string,
-  updatedData // TODO: ADD PROPER TYPE
+  updatedData: ClientItemI[] | PropertyItemI[] | null
 ): Promise<ApiRequestResultI> => {
   return apiRequest(HTTP_METHOD.PUT, `/property/${id}`, updatedData)
 }
 
-export const deleteProperty = async (id: string): Promise<ApiRequestResultI> => {
+export const deleteProperty = async (
+  id: string
+): Promise<ApiRequestResultI> => {
   return apiRequest(HTTP_METHOD.DELETE, `/property/${id}`, null)
 }
