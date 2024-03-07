@@ -50,56 +50,106 @@ const apiRequest: ApiRequestI = async (
 
 // CLIENT REQUESTS
 export const getAllClients = async (): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.GET, "/client", null)
+  try {
+    return await apiRequest(HTTP_METHOD.GET, "/clients", null)
+  } catch (error) {
+    console.error("Error fetching all clients:", error)
+    throw error
+  }
 }
 
 export const getClientById = async (id: string): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.GET, `/client/${id}`, null)
+  try {
+    return await apiRequest(HTTP_METHOD.GET, `/client/${id}`, null)
+  } catch (error) {
+    console.error("Error fetching client:", error)
+    throw error
+  }
 }
 
 export const createClient = async (
   userData: ClientItemI[] | PropertyItemI[] | null
 ): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.POST, "/client", userData)
+  try {
+    return apiRequest(HTTP_METHOD.POST, "/client", userData)
+  } catch (error) {
+    console.error("Error creating clients:", error)
+    throw error
+  }
 }
 
 export const updateClient = async (
   id: string,
   updatedData: ClientItemI[]
 ): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.PUT, `/client/${id}`, updatedData)
+  try {
+    return apiRequest(HTTP_METHOD.PUT, `/client/${id}`, updatedData)
+  } catch (error) {
+    console.error("Error updating client:", error)
+    throw error
+  }
 }
 
 export const deleteClient = async (id: string): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.DELETE, `/client/${id}`, null)
+  try {
+    return apiRequest(HTTP_METHOD.DELETE, `/client/${id}`, null)
+  } catch (error) {
+    console.error("Error deleting client:", error)
+    throw error
+  }
 }
 
 // PROPERTY REQUESTS
 export const getAllProperties = async (): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.GET, "/property", null)
+  try {
+    return apiRequest(HTTP_METHOD.GET, "/property", null)
+  } catch (error) {
+    console.error("Error fetching all properties:", error)
+    throw error
+  }
 }
 
 export const getPropertyById = async (
   id: string
 ): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.GET, `/property/${id}`, null)
+  try {
+    return apiRequest(HTTP_METHOD.GET, `/property/${id}`, null)
+  } catch (error) {
+    console.error("Error fetching property:", error)
+    throw error
+  }
 }
 
 export const createProperty = async (
   userData: ClientItemI[] | PropertyItemI[] | null
 ): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.POST, "/property", userData)
+  try {
+    return apiRequest(HTTP_METHOD.POST, "/property", userData)
+  } catch (error) {
+    console.error("Error creating property:", error)
+    throw error
+  }
 }
 
 export const updateProperty = async (
   id: string,
   updatedData: ClientItemI[] | PropertyItemI[] | null
 ): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.PUT, `/property/${id}`, updatedData)
+  try {
+    return apiRequest(HTTP_METHOD.PUT, `/property/${id}`, updatedData)
+  } catch (error) {
+    console.error("Error creating property:", error)
+    throw error
+  }
 }
 
 export const deleteProperty = async (
   id: string
 ): Promise<ApiRequestResultI> => {
-  return apiRequest(HTTP_METHOD.DELETE, `/property/${id}`, null)
+  try {
+    return apiRequest(HTTP_METHOD.DELETE, `/property/${id}`, null)
+  } catch (error) {
+    console.error("Error deleting property:", error)
+    throw error
+  }
 }
