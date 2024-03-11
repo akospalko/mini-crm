@@ -1,9 +1,6 @@
 // Property state logic
 import { createContext, useEffect, useReducer, useMemo } from "react"
-import {
-  DATABASE_RESOURCES,
-  REDUCER_ACTION_TYPE_PROPERTY,
-} from "../types/actionTypes"
+import { REDUCER_ACTION_TYPE_PROPERTY } from "../types/actionTypes"
 import {
   ChildrenI,
   UsePropertyContextType,
@@ -11,8 +8,9 @@ import {
   PropertyStateI,
   PropertyContextReducerActionI,
 } from "../types/types"
-import useFetchData from "./useFetchData"
 import text from "../data/text.json"
+import { getAllProperties } from "../Requests/apiRequests"
+import { AxiosError } from "axios"
 
 // REDUCER
 const reducer = (
@@ -80,16 +78,27 @@ export const usePropertyContext = (initPropertyState: PropertyStateI) => {
 
   // HOOK
   // Fetch data
-  const { data } = useFetchData(DATABASE_RESOURCES.PROPERTIES)
 
   // EFFECTS
   // Store fetched data
   useEffect(() => {
-    dispatch({
-      type: REDUCER_ACTION_TYPE_PROPERTY.UPDATE_PROPERTY,
-      payload: { property: data as PropertyItemI[] },
-    })
-  }, [data])
+    const fetchClients = async () => {
+      try {
+        // Call your getAllProperties function
+        const { responseData /*, error, status */ } = await getAllProperties()
+        console.log(responseData)
+        dispatch({
+          type: REDUCER_ACTION_TYPE_PROPERTY.UPDATE_PROPERTY,
+          payload: { property: responseData as PropertyItemI[] },
+        })
+      } catch (error: unknown) {
+        if (error instanceof Error || error instanceof AxiosError) {
+          throw new Error("Unknown error occurred")
+        }
+      }
+    }
+    fetchClients()
+  }, [])
 
   return {
     dispatch,
