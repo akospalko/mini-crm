@@ -291,7 +291,7 @@ export interface LabelPropsI {
 // ManagementItemButton.tsx
 export interface ManagementItemButtonPropsI {
   children: ReactNode
-  changed: () => void
+  clicked: () => void
   title: string
   dataAction: string
 }

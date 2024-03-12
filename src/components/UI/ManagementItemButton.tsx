@@ -3,7 +3,7 @@ import testID from "../../data/data_test_id.json"
 import { ManagementItemButtonPropsI } from "../../types/types"
 
 const ManagementItemButton = ({
-  changed,
+  clicked,
   title,
   children,
   dataAction,
@@ -14,7 +14,7 @@ const ManagementItemButton = ({
       data-action={dataAction}
       title={title}
       className="m-auto h-[40px] w-[40px] rounded bg-color_accent text-color_4 focus-visible-style hover:bg-color_accent_secondary"
-      onClick={changed}
+      onClick={clicked}
     >
       {children}
     </button>
