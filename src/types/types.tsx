@@ -311,3 +311,18 @@ export interface MultiTypeInputPropsI {
 export interface ChildrenI {
   children?: React.ReactElement | React.ReactElement[]
 }
+
+// TODO: RELOCATE ENUMS BELOW, OUTSOURCE TO A SEPARATE FILE
+// ENUMS
+export enum BASIC_CLIENT_DATA_FIELD {
+  ID = "id",
+  FULL_NAME = "full name",
+  ADDRESS = "address",
+  PHONE = "phone",
+  NOTE = "note",
+}
+
+export enum CLIENT_DATA_FIELD_GROUP {
+  BASIC = "Basic",
+  PROPERTY = "Property",
+}
