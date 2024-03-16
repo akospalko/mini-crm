@@ -69,3 +69,17 @@ export const updateDataArray = (
 
   return updatedArray
 }
+
+// Format obj keys to labels
+export const objKeysToLabels = (
+  input: string,
+  capitalize?: boolean
+): string => {
+  let formattedText = input.replace(/_/g, " ").trim()
+  if (capitalize) {
+    formattedText = formattedText.replace(/\b\w/g, (firstLetter) =>
+      firstLetter.toUpperCase()
+    )
+  }
+  return formattedText
+}
