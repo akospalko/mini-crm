@@ -89,122 +89,21 @@ const useFormHandlers = () => {
 
   // Updating existing client
   const updateExistingClient = () => {
-    // process FormData extract basic client elements -> array of obj entries
-    const clientFormValues = Object.entries(formData)
-      .filter(([key]) =>
-        Object.values(ClientFormDataE).includes(key as ClientFormDataE)
-      )
-      .map(([key, value]) => {
-        return { [key]: value["value"] };
-      });
-
-    // process FormData extract properties related elements -> array of obj entries
-    const propertiesFormValues = Object.entries(formData)
-      .filter(
-        ([key]) =>
-          !Object.values(ClientFormDataE).includes(key as ClientFormDataE)
-      )
-      .map(([key, value]) => {
-        return { [key]: value["value"] };
-      });
-
-    // convert client to clients storage complatible data
-    const clientData: ClientItemI = clientFormValues.reduce(
-      (acc: ClientItemI, item) => {
-        const key: ClientKeys = Object.keys(item)[0] as ClientKeys;
-        const value = item[key];
-        acc[key] = value;
-
-        return acc;
-      },
-      {
-        id: "",
-        full_name: "",
-        address: "",
-        phone: "",
-        note: "",
-        position: JobPositionsE.CEO,
-        properties: [],
-      }
-    );
-
-    // convert property to clients storage compatible(property) data
-    const propertiesData = propertiesFormValues.map((item) => {
-      const key = Object.keys(item)[0];
-      const value = item[key];
-
-      return { id: key, value };
-    });
-
-    // define new client
-    const updatedClient: ClientItemI = {
-      ...clientData,
-      id: activeClient.id,
-      properties: propertiesData,
-    };
-
-    const updatedClients = updateDataArray(
-      clients,
-      updatedClient
-    ) as ClientItemI[];
-
-    // store updated client
-    dispatchClients({
-      type: REDUCER_ACTIONS_CLIENT.UPDATE_CLIENT,
-      payload: { clients: updatedClients },
-    });
-    // update clients in ls
-    localStorage.setItem(
-      DATABASE_RESOURCES.CLIENTS,
-      JSON.stringify(updatedClients)
-    );
+    // TODO:...
   };
 
   // Update existing property
-  const updateExistingProperty = (): void => {
-    // process FormData extract property elements -> array of obj entries
-    const propertyFormValues = Object.entries(formData).map(([key, value]) => {
-      return { [key]: value["value"] };
-    });
+  const updateExistingProperty = () => {
+    // TODO:...
+    console.log(formData);
+    const extractedData = {};
 
-    // property data to update property storage
-    const propertyData = propertyFormValues.reduce(
-      (acc, item) => {
-        const key = Object.keys(item)[0];
-        const value = item[key];
-        acc[key] = value;
+    for (const key in formData) {
+      const obj = formData[key];
+      extractedData[key] = obj.value;
+    }
 
-        return acc;
-      },
-      {
-        id: "",
-        label: "",
-        type: PropertyTypeE.text,
-        required: false,
-      }
-    );
-
-    // define new client
-    const updatedProperty: PropertyItemI = {
-      ...(propertyData as PropertyItemI),
-      id: activeProperty.id,
-    };
-
-    const updatedProperties: PropertyItemI[] = updateDataArray(
-      property,
-      updatedProperty
-    ) as PropertyItemI[];
-
-    dispatchProperty({
-      type: REDUCER_ACTIONS_PROPERTY.UPDATE_PROPERTY,
-      payload: { property: updatedProperties },
-    });
-
-    // update properties in ls
-    localStorage.setItem(
-      DATABASE_RESOURCES.PROPERTIES,
-      JSON.stringify(updatedProperties)
-    );
+    return extractedData;
   };
 
   return {
