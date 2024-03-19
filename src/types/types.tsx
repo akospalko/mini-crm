@@ -61,6 +61,23 @@ export interface ClientItemI {
 export interface ClientItemWithoutPropertiesI
   extends Omit<ClientItemI, "properties"> {}
 
+export interface ClientItemCreateI {
+  full_name: string;
+  address: string;
+  phone: string;
+  note: string;
+  position: JobPositionsE;
+  properties: { [key: string]: string | boolean };
+}
+
+// Interface without the 'properties' entry
+export interface ClientItemCreateWithoutPropertiesI
+  extends Omit<ClientItemCreateI, "properties"> {}
+
+// Interface with only the 'properties' entry
+export interface ClientItemCreatePropertiesI
+  extends Pick<ClientItemCreateI, "properties"> {}
+
 export type ClientKeys = keyof ClientItemI;
 
 // FORM & INPUT & TEMPLATES
@@ -68,6 +85,7 @@ export type ClientKeys = keyof ClientItemI;
 export enum InputFieldTypesE {
   text = "text",
   date = "date",
+  boolean = "boolean", // same as checkbox
   checkbox = "checkbox",
   dropdown = "dropdown",
   textarea = "textarea",
@@ -98,7 +116,7 @@ export interface TransformedFormFieldI {
 
 // Form template: client
 export interface ClientFormTemplateI {
-  [key: string]: DefaultFormFieldI | DropdownFormFieldI | TransformedFormFieldI;
+  [key: string]: DefaultFormFieldI | DropdownFormFieldI | TransformedFormFieldI; // TOOD: create properties array to hold these dynamic fields
   full_name: DefaultFormFieldI;
   address: DefaultFormFieldI;
   phone: DefaultFormFieldI;
@@ -156,7 +174,7 @@ export interface PopulateFormDataWithActiveClientI {
 }
 
 export enum ClientFormDataE {
-  "full name" = "full name",
+  "full_name" = "full_name",
   "address" = "address",
   "phone" = "phone",
   "note" = "note",
@@ -262,7 +280,7 @@ export interface CheckboxPropsI {
 // CreateItemButton.tsx
 export interface CreateItemButtonPropsI {
   title: string;
-  changed: () => void;
+  clicked: () => void;
 }
 
 // DatePicker.tsx
@@ -333,6 +351,7 @@ export enum BASIC_CLIENT_DATA_FIELD {
   ADDRESS = "address",
   PHONE = "phone",
   NOTE = "note",
+  POSITION = "position",
 }
 
 export enum CLIENT_DATA_FIELD_GROUP {
