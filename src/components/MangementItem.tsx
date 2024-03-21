@@ -12,15 +12,10 @@ import {
 } from "../types/actionTypes";
 import {
   ClientItemI,
-  PopulateFormDataWithActiveClientI,
   PropertyItemI,
   ClientManagementPropsI,
-  ClientPropertyI,
 } from "../types/types";
-import {
-  findActiveArrayItem,
-  populateFormWithActiveData,
-} from "../utility/misc";
+import { populateFormWithActiveData } from "../utility/misc";
 import ManagementItemButton from "./UI/ManagementItemButton";
 import { DeleteIcon, EditIcon } from "./UI/SVG";
 import dataAction from "../data/data_test_id.json";
@@ -32,24 +27,17 @@ import {
   getAllClients,
   getAllProperties,
 } from "../Requests/apiRequests";
-import { getPropertyById } from "../Requests/apiRequests";
+import { getClientById, getPropertyById } from "../Requests/apiRequests";
 
 const MangementItem = ({
   itemData,
   activeManagement,
 }: ClientManagementPropsI) => {
   // CONTEXT
-  const {
-    clients,
-    dispatch: dispatchClients,
-    REDUCER_ACTIONS_CLIENT,
-  } = useClients();
+  const { dispatch: dispatchClients, REDUCER_ACTIONS_CLIENT } = useClients();
 
-  const {
-    property,
-    dispatch: dispatchProperty,
-    REDUCER_ACTIONS_PROPERTY,
-  } = useProperty();
+  const { dispatch: dispatchProperty, REDUCER_ACTIONS_PROPERTY } =
+    useProperty();
 
   const { toggleModal, menuContentChangeHandler } = useToggleMenu();
   const { setFormData } = useForm();
@@ -58,38 +46,11 @@ const MangementItem = ({
   const { getClientFormTemplate, getPropertyFormTemplate } =
     useFormDataTemplate();
 
-  // UTIL
-  // Remap activeClients nested "properties" entries -> make form compatible
-  const getActiveClientWithRemappedProperties = (
-    activeClientData: ClientItemI
-  ): PopulateFormDataWithActiveClientI => {
-    if (!activeClientData) {
-      return {};
-    }
-
-    const updatedActiveClient: PopulateFormDataWithActiveClientI = {
-      ...activeClientData,
-    };
-
-    if (activeClientData.properties && activeClientData.properties.length > 0) {
-      activeClientData.properties.forEach((property) => {
-        if (property.id) {
-          updatedActiveClient[property.id] = property.value;
-        }
-      });
-
-      // remove "properties" entry
-      delete updatedActiveClient.properties;
-    }
-    return updatedActiveClient;
-  };
-
   // HANDLERS
-  // Delete client and property item
+  // Delete item (client, property)
   const deleteItemHandler = async (id: string): Promise<void> => {
-    const invalidIDError: string = "Invalid id";
-    if (!id) {
-      throw new Error(invalidIDError);
+    if (!id || typeof id !== "string") {
+      throw new Error(`Invalid id: ${id}`);
     }
     try {
       if (id.charAt(0) === "c") {
@@ -106,23 +67,49 @@ const MangementItem = ({
           type: REDUCER_ACTION_TYPE_PROPERTY.UPDATE_PROPERTY,
           payload: { property: responseData as PropertyItemI[] },
         });
-        // TODO: Refetch property
-        // TODO: Update property
       }
     } catch (err) {
       throw new Error(`Error while deleting item: ${err}`);
     }
   };
 
-  //------------------------------------
   // NEW
-  const showClientHandler = (id: string) => {};
+  const showClientHandler = async (id: string) => {
+    if (!id || typeof id !== "string") {
+      throw new Error(`Invalid id: ${id}`);
+    }
+    try {
+      // Fetch data
+      const response = await getClientById(id);
+      const { responseData } = response;
+      // Set up active menu content
+      menuContentChangeHandler(ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT);
+      // Update active property state
+      dispatchClients({
+        type: REDUCER_ACTIONS_CLIENT.UPDATE_ACTIVE_CLIENT,
+        payload: { activeClient: responseData as ClientItemI },
+      });
+
+      // Populate form
+      const populatedForm = populateFormWithActiveData(
+        responseData,
+        getClientFormTemplate()
+      );
+      // Update form state with populated data
+      setFormData(populatedForm);
+      // Open modal
+      toggleModal(true);
+    } catch (error) {
+      // Handle errors
+      console.error(`Error fetching property item (${id}):`, error);
+    }
+  };
 
   // Show property menu
   // TODO: Fix types
   const showPropertyHandler = async (id: string) => {
     if (!id || typeof id !== "string") {
-      throw new Error(`Missing id: ${id}`);
+      throw new Error(`Invalid id: ${id}`);
     }
     try {
       // Fetch data
@@ -151,64 +138,6 @@ const MangementItem = ({
     }
   };
 
-  // ----------------------------
-  // OLD
-
-  // Edit/update client and property item
-  const editItemHandler = (isClientAction: boolean) => {
-    // check for provided arguments
-    if (
-      isClientAction === undefined ||
-      isClientAction === null ||
-      typeof isClientAction !== "boolean"
-    ) {
-      throw new Error(`${text["error-invalid-argument"]} ${isClientAction}`);
-    }
-
-    // set up active menu content
-    menuContentChangeHandler(
-      isClientAction
-        ? ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT
-        : ACTIVE_MENU_ACTION_TYPE.EDIT_PROPERTY
-    );
-
-    // find activec item
-    const activeItem: ClientItemI | PropertyItemI = findActiveArrayItem(
-      itemData.id,
-      isClientAction ? clients : property
-    );
-
-    // update state
-    isClientAction
-      ? dispatchClients({
-          type: REDUCER_ACTIONS_CLIENT.UPDATE_ACTIVE_CLIENT,
-          payload: { activeClient: activeItem as ClientItemI },
-        })
-      : dispatchProperty({
-          type: REDUCER_ACTIONS_PROPERTY.UPDATE_ACTIVE_PROPERTY,
-          payload: { activeProperty: activeItem as PropertyItemI },
-        });
-
-    // process active item: client -> assign properties to form, property -> same as activeItem
-    const activeItemProcessed:
-      | PopulateFormDataWithActiveClientI
-      | PropertyItemI = isClientAction
-      ? getActiveClientWithRemappedProperties(activeItem as ClientItemI)
-      : (activeItem as PropertyItemI);
-
-    // populate form
-    const populatedForm = populateFormWithActiveData(
-      activeItemProcessed,
-      isClientAction ? getClientFormTemplate() : getPropertyFormTemplate()
-    );
-
-    // update form state with populated data
-    setFormData(populatedForm);
-
-    // open modal
-    toggleModal(true);
-  };
-
   // STYLE
   const iconSize: string = "25px";
   const iconColor: string = "var(--color_1)";
@@ -217,16 +146,13 @@ const MangementItem = ({
   // LAYOUT
   // Get active content
   let activeEditHandler = async () => {};
-  // let activeDeleteItemHandler = () => {}
-  // let activeDeleteItemHandler = deleteItemHandler(itemData.id)
   const clientItemData: ClientItemI = itemData as ClientItemI;
   const propertyItemData: PropertyItemI = itemData as PropertyItemI;
 
   let itemContent;
   switch (activeManagement) {
     case ACTIVE_MANAGEMENT.CLIENT_MANAGEMENT:
-      activeEditHandler = () => editItemHandler(true);
-      // activeDeleteItemHandler = () => deleteItemHandler(true)
+      activeEditHandler = async () => await showClientHandler(itemData.id);
       itemContent = (
         <>
           <span
@@ -243,7 +169,6 @@ const MangementItem = ({
       break;
     case ACTIVE_MANAGEMENT.PROPERTY_MANAGEMENT:
       activeEditHandler = async () => await showPropertyHandler(itemData.id);
-      // activeDeleteItemHandler = () => deleteItemHandler(itemData.id)
       itemContent = (
         <>
           <span
@@ -263,7 +188,6 @@ const MangementItem = ({
   }
 
   // RENDER
-
   return (
     <div
       data-testid={testID["management-client-item"]}
@@ -280,7 +204,7 @@ const MangementItem = ({
       <ManagementItemButton
         title={text["title-delete"]}
         dataAction={dataAction["data-action-delete"]}
-        clicked={() => deleteItemHandler(itemData.id)}
+        clicked={async () => deleteItemHandler(itemData.id)}
       >
         <DeleteIcon width={iconSize} height={iconSize} fill={iconColor} />
       </ManagementItemButton>
