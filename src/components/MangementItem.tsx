@@ -1,4 +1,5 @@
-// Client item for management page
+// TODO: Fix types
+// Management page client and property pg
 import useClients from "../hooks/useClients";
 import useForm from "../hooks/useForm";
 import useFormDataTemplate from "../hooks/useFormDataTemplate";
@@ -33,47 +34,58 @@ const MangementItem = ({
   itemData,
   activeManagement,
 }: ClientManagementPropsI) => {
-  // CONTEXT
+  // CONTEXTS
   const { dispatch: dispatchClients, REDUCER_ACTIONS_CLIENT } = useClients();
-
   const { dispatch: dispatchProperty, REDUCER_ACTIONS_PROPERTY } =
     useProperty();
-
   const { toggleModal, menuContentChangeHandler } = useToggleMenu();
   const { setFormData } = useForm();
-
   // HOOK
   const { getClientFormTemplate, getPropertyFormTemplate } =
     useFormDataTemplate();
 
   // HANDLERS
-  // Delete item (client, property)
-  const deleteItemHandler = async (id: string): Promise<void> => {
-    if (!id || typeof id !== "string") {
-      throw new Error(`Invalid id: ${id}`);
-    }
+  // Delete client
+  const deleteClientHandler = async (id: string): Promise<void> => {
     try {
-      if (id.charAt(0) === "c") {
-        await deleteClient(id);
-        const { responseData } = await getAllClients();
-        dispatchClients({
-          type: REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT,
-          payload: { clients: responseData as ClientItemI[] },
-        });
-      } else if (id.charAt(0) === "p") {
-        await deleteProperty(id);
-        const { responseData } = await getAllProperties();
-        dispatchProperty({
-          type: REDUCER_ACTION_TYPE_PROPERTY.UPDATE_PROPERTY,
-          payload: { property: responseData as PropertyItemI[] },
-        });
+      if (!id || typeof id !== "string") {
+        throw new Error(`Invalid id: ${id}`);
       }
+      if (id.charAt(0) !== "c") {
+        throw new Error(`Wrong id type: ${id}`);
+      }
+      await deleteClient(id);
+      const { responseData } = await getAllClients();
+      dispatchClients({
+        type: REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT,
+        payload: { clients: responseData as ClientItemI[] },
+      });
     } catch (err) {
       throw new Error(`Error while deleting item: ${err}`);
     }
   };
 
-  // NEW
+  // Delete property
+  const deletePropertyHandler = async (id: string): Promise<void> => {
+    try {
+      if (!id || typeof id !== "string") {
+        throw new Error(`Invalid id: ${id}`);
+      }
+      if (id.charAt(0) !== "p") {
+        throw new Error(`Wrong id type: ${id}`);
+      }
+      await deleteProperty(id);
+      const { responseData } = await getAllProperties();
+      dispatchProperty({
+        type: REDUCER_ACTION_TYPE_PROPERTY.UPDATE_PROPERTY,
+        payload: { property: responseData as PropertyItemI[] },
+      });
+    } catch (err) {
+      throw new Error(`Error while deleting item: ${err}`);
+    }
+  };
+
+  // Show client menu
   const showClientHandler = async (id: string) => {
     if (!id || typeof id !== "string") {
       throw new Error(`Invalid id: ${id}`);
@@ -106,7 +118,6 @@ const MangementItem = ({
   };
 
   // Show property menu
-  // TODO: Fix types
   const showPropertyHandler = async (id: string) => {
     if (!id || typeof id !== "string") {
       throw new Error(`Invalid id: ${id}`);
@@ -141,11 +152,10 @@ const MangementItem = ({
   // STYLE
   const iconSize: string = "25px";
   const iconColor: string = "var(--color_1)";
-  const contentStyle: string = "my-auto truncate";
 
   // LAYOUT
-  // Get active content
   let activeEditHandler = async () => {};
+  let activeDeleteHandler = async () => {};
   const clientItemData: ClientItemI = itemData as ClientItemI;
   const propertyItemData: PropertyItemI = itemData as PropertyItemI;
 
@@ -153,15 +163,16 @@ const MangementItem = ({
   switch (activeManagement) {
     case ACTIVE_MANAGEMENT.CLIENT_MANAGEMENT:
       activeEditHandler = async () => await showClientHandler(itemData.id);
+      activeDeleteHandler = async () => await deleteClientHandler(itemData.id);
       itemContent = (
         <>
           <span
             title={clientItemData["full_name"]}
-            className={`${contentStyle} mr-5`}
+            className={"my-auto mr-5 truncate"}
           >
             {clientItemData["full_name"]}
           </span>
-          <span title={clientItemData["position"]} className={contentStyle}>
+          <span title={clientItemData["position"]} className="my-auto truncate">
             {clientItemData["position"]}
           </span>
         </>
@@ -169,15 +180,17 @@ const MangementItem = ({
       break;
     case ACTIVE_MANAGEMENT.PROPERTY_MANAGEMENT:
       activeEditHandler = async () => await showPropertyHandler(itemData.id);
+      activeDeleteHandler = async () =>
+        await deletePropertyHandler(itemData.id);
       itemContent = (
         <>
           <span
             title={propertyItemData.label}
-            className={`${contentStyle} mr-5`}
+            className={"my-auto mr-5 truncate"}
           >
             {propertyItemData.label}
           </span>
-          <span title={propertyItemData.type} className={contentStyle}>
+          <span title={propertyItemData.type} className="my-auto truncate">
             {propertyItemData.type}
           </span>
         </>
@@ -204,7 +217,7 @@ const MangementItem = ({
       <ManagementItemButton
         title={text["title-delete"]}
         dataAction={dataAction["data-action-delete"]}
-        clicked={async () => deleteItemHandler(itemData.id)}
+        clicked={activeDeleteHandler}
       >
         <DeleteIcon width={iconSize} height={iconSize} fill={iconColor} />
       </ManagementItemButton>
