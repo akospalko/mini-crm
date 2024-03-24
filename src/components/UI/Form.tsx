@@ -1,17 +1,35 @@
+// TODO: Fix type
+// TODO: Fix update client functionality
+// TODO: Fix enum name -> edit to update
 // Reusable form component
-import MultiTypeInput from "./MultiTypeInput"
-import { DropdownFormFieldI, InputFieldTypesE, FormPropsI } from "../../types/types"
-import { ACTIVE_MENU_ACTION_TYPE } from "../../types/actionTypes"
-import useForm from "../../hooks/useForm"
-import useManagementOperations from "../../hooks/useManagementOperations"
-import useToggleMenu from "../../hooks/useToggleMenu"
-import text from "../../data/text.json"
-import testID from "../../data/data_test_id.json"
+import MultiTypeInput from "./MultiTypeInput";
+import {
+  DropdownFormFieldI,
+  InputFieldTypesE,
+  FormPropsI,
+  ClientItemCreateI,
+} from "../../types/types";
+import { ACTIVE_MENU_ACTION_TYPE } from "../../types/actionTypes";
+import useForm from "../../hooks/useForm";
+import useManagementOperations from "../../hooks/useManagementOperations";
+import useToggleMenu from "../../hooks/useToggleMenu";
+import text from "../../data/text.json";
+import testID from "../../data/data_test_id.json";
+import {
+  createClient,
+  updateClient,
+  createProperty,
+  updateProperty,
+  getAllClients,
+} from "../../Requests/apiRequests";
+import { FormEvent } from "react";
+import useProperty from "../../hooks/useProperty";
 
 const Form = ({ action }: FormPropsI) => {
   // CONTEXT
-  const { toggleModal } = useToggleMenu()
-  const { formData } = useForm()
+  const { toggleModal } = useToggleMenu();
+  const { formData } = useForm();
+  const { activeProperty } = useProperty();
 
   // HOOK
   const {
@@ -19,56 +37,84 @@ const Form = ({ action }: FormPropsI) => {
     createNewProperty,
     updateExistingClient,
     updateExistingProperty,
-  } = useManagementOperations()
+  } = useManagementOperations();
 
-  // HANDLERS
-  // Generic form submission handler
-  const genericFormSubmitHandler = (
-    e: React.FormEvent<HTMLFormElement>,
-    submitHandler: () => void
-  ): void => {
-    e.preventDefault()
-    submitHandler()
-    toggleModal(false)
-  }
-
+  // OLD
   // Submit form for creating new client
-  const createClientHandler = (e: React.FormEvent<HTMLFormElement>): void => {
-    genericFormSubmitHandler(e, createNewClient)
-  }
-
-  // Submit form, update existing client
-  const editClientHandler = (e: React.FormEvent<HTMLFormElement>): void => {
-    genericFormSubmitHandler(e, updateExistingClient)
-  }
+  // TODO: client's property data are not displaying properly
+  const createClientHandler = async (
+    e: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    // genericFormSubmitHandler(e, createNewClient); // delete generic form submit handler
+    // TODO:
+    const clientData: ClientItemCreateI = createNewClient(); // TODO: Rename createNewClient() ->
+    // POST REQUEST
+    await createClient(clientData);
+    // await getAllClients();
+    // toggleModal(false);
+  };
 
   // Submit form, create new property
-  const createPropertyHandler = (e: React.FormEvent<HTMLFormElement>): void => {
-    genericFormSubmitHandler(e, createNewProperty)
-  }
+  const createPropertyHandler = async (
+    e: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    // genericFormSubmitHandler(e, createNewProperty);
+    const clientPropertyData = createNewProperty(); // TODO: Rename
+    await createProperty(clientPropertyData);
+    // TODO: Successful creation -> show property menu
+    toggleModal(false);
+  };
 
+  // ---------- NEW ----------
   // Submit form, update existing property
-  const editPropertyHandler = (e: React.FormEvent<HTMLFormElement>): void => {
-    genericFormSubmitHandler(e, updateExistingProperty)
-  }
+  const updatePropertyHandler = async (
+    e: FormEvent<HTMLFormElement>,
+    id: string
+  ) => {
+    e.preventDefault();
+    try {
+      if (!id || typeof id !== "string") {
+        throw new Error(`Invalid id: ${id}`);
+      }
+      if (id.charAt(0) !== "p") {
+        throw new Error(`Wrong id type: ${id}`);
+      }
+      // genericFormSubmitHandler(e, updateExistingProperty);
+      const updatedPropertyData = updateExistingProperty();
+      await updateProperty(id, updatedPropertyData);
+      // toggleModal(false);
+    } catch (error) {
+      throw new Error(`Error updating property (${id}):`, error);
+    }
+  };
 
+  // Layout
   // Determine the active handler based on the action prop
-  let activeHandler
+  let activeHandler: (
+    e: FormEvent<HTMLFormElement>,
+    data: any
+  ) => Promise<void> = async (e, data) => {};
+
   switch (action) {
     case ACTIVE_MENU_ACTION_TYPE.CREATE_CLIENT:
-      activeHandler = createClientHandler
-      break
+      // TODO:
+      activeHandler = async (e) => await createClientHandler(e);
+      break;
     case ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT:
-      activeHandler = editClientHandler
-      break
+      // TODO:
+      // activeHandler = async () => await createClientHandler();
+      break;
     case ACTIVE_MENU_ACTION_TYPE.CREATE_PROPERTY:
-      activeHandler = createPropertyHandler
-      break
+      activeHandler = async (e) => createPropertyHandler(e);
+      break;
     case ACTIVE_MENU_ACTION_TYPE.EDIT_PROPERTY:
-      activeHandler = editPropertyHandler
-      break
+      activeHandler = async (e) => updatePropertyHandler(e, activeProperty.id);
+
+      break;
     default:
-      throw new Error(`${text["error-unknown-action-type"]} ${action}`)
+      throw new Error(`${text["error-unknown-action-type"]} ${action}`);
   }
 
   return (
@@ -108,7 +154,7 @@ const Form = ({ action }: FormPropsI) => {
         </button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;
