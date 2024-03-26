@@ -45,26 +45,24 @@ const useFormHandlers = () => {
     // TODO: HANDLE TYPING
     const extractedBasicInfo: ClientItemCreateWithoutPropertiesI =
       {} as ClientItemCreateWithoutPropertiesI;
-    const extractedProperties: ClientItemCreatePropertiesI =
-      {} as ClientItemCreatePropertiesI;
+    const extractedProperties: ClientItemCreatePropertiesI[] = []; // Change to array
 
     for (const key in formData) {
       const { value } = formData[key];
       if (Object.values(ClientFormDataE).includes(key as ClientFormDataE)) {
         extractedBasicInfo[key] = value;
       } else if (key.startsWith("p-")) {
-        extractedProperties[key] = value;
+        extractedProperties.push({ [key]: value });
       }
     }
 
     const processedClientData: ClientItemCreateI = {
       ...extractedBasicInfo,
-      properties: { ...extractedProperties },
+      properties: extractedProperties,
     };
 
     return processedClientData;
   };
-
   /*
     {
       "label": "provided phone number",
