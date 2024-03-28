@@ -1,13 +1,14 @@
+// TODO: textarea for Note field
 // Reusable input field with various types
 import {
   JobPositionsE,
   InputFieldTypesE,
   MultiTypeInputPropsI,
-} from "../../types/types"
-import Dropdown from "./Dropdown"
-import InputText from "./InputText"
-import Checkbox from "./Checkbox"
-import DatePicker from "./DatePicker"
+} from "../../types/types";
+import Dropdown from "./Dropdown";
+import InputText from "./InputText";
+import Checkbox from "./Checkbox";
+import DatePicker from "./DatePicker";
 
 const MultiTypeInput = ({
   name,
@@ -19,7 +20,7 @@ const MultiTypeInput = ({
 }: MultiTypeInputPropsI) => {
   // HANDLER
   // Get input field based on type
-  let inputField
+  let inputField;
   switch (type) {
     case InputFieldTypesE.text:
     case InputFieldTypesE.textarea:
@@ -31,8 +32,8 @@ const MultiTypeInput = ({
           value={value as string}
           required={required}
         />
-      )
-      break
+      );
+      break;
     case InputFieldTypesE.date:
       inputField = (
         <DatePicker
@@ -41,8 +42,8 @@ const MultiTypeInput = ({
           label={label}
           required={required}
         />
-      )
-      break
+      );
+      break;
     case InputFieldTypesE.dropdown:
       inputField = (
         <Dropdown
@@ -51,9 +52,10 @@ const MultiTypeInput = ({
           options={options}
           value={value as JobPositionsE}
         />
-      )
-      break
+      );
+      break;
     case InputFieldTypesE.checkbox:
+    case InputFieldTypesE.boolean: // Same as checkbox -> replace boolean with checkbox
       inputField = (
         <Checkbox
           name={name}
@@ -61,13 +63,13 @@ const MultiTypeInput = ({
           checkValue={value as boolean}
           required={required}
         />
-      )
-      break
+      );
+      break;
     default:
-      throw new Error(`text["error-unknown-action-type"]: ${type}`)
+      throw new Error(`text["error-unknown-action-type"]: ${type}`);
   }
 
-  return inputField
-}
+  return inputField;
+};
 
-export default MultiTypeInput
+export default MultiTypeInput;

@@ -1,4 +1,6 @@
 // TODO: Fix types
+// TODO: throw error instead of console log
+// TODO: Fix file name
 // Management page client and property pg
 import useClients from "../hooks/useClients";
 import useForm from "../hooks/useForm";

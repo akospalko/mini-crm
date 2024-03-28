@@ -2,7 +2,7 @@
 // Client state logic
 import { createContext, useEffect, useReducer, useMemo } from "react"
 import {
-  DATABASE_RESOURCES,
+  // DATABASE_RESOURCES,
   REDUCER_ACTION_TYPE_CLIENT,
 } from "../types/actionTypes"
 import {
@@ -12,8 +12,11 @@ import {
   ClientStateI,
   ChildrenI,
 } from "../types/types"
-import useFetchData from "./useFetchData"
+// import useFetchData from "./useFetchData"
+// import useFetchResources from "./useFetchResources"
+import { getAllClients } from "../Requests/apiRequests"
 import text from "../data/text.json"
+import { AxiosError } from "axios"
 
 // REDUCER
 const reducer = (
@@ -87,16 +90,28 @@ export const useClientContext = (initClientState: ClientStateI) => {
 
   // HOOK
   // Fetch data
-  const { data } = useFetchData(DATABASE_RESOURCES.CLIENTS)
+  // const { data } = useFetchData(DATABASE_RESOURCES.CLIENTS)
+  // const { data } = useFetchResources()
 
   // EFFECTS
   // Store fetched data
   useEffect(() => {
-    dispatch({
-      type: REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT,
-      payload: { clients: data as ClientItemI[] },
-    })
-  }, [data])
+    const fetchClients = async () => {
+      try {
+        // Call your getAllClients function
+        const { responseData /*, error, status */ } = await getAllClients()
+        dispatch({
+          type: REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT,
+          payload: { clients: responseData as ClientItemI[] },
+        })
+      } catch (error: unknown) {
+        if (error instanceof Error || error instanceof AxiosError) {
+          throw new Error("Unknown error occurred")
+        }
+      }
+    }
+    fetchClients()
+  }, [])
 
   return {
     dispatch,

@@ -1,6 +1,6 @@
 // Define axios instance specifying the proper endpoints
-import axios from "axios"
-import { AxiosInstance } from "axios"
+import axios from "axios";
+import { AxiosInstance } from "axios";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: "/api/v1/", // TODO: Replace with hosted url
@@ -8,6 +8,6 @@ const axiosInstance: AxiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-})
+});
 
-export default axiosInstance
+export default axiosInstance;

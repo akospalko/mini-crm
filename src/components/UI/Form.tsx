@@ -30,13 +30,13 @@ const Form = ({ action }: FormPropsI) => {
   const { toggleModal } = useToggleMenu();
   const { formData } = useForm();
   const { activeProperty } = useProperty();
-
+  console.log(formData);
   // HOOK
   const {
     createNewClient,
     createNewProperty,
     updateExistingClient,
-    updateExistingProperty,
+    updateExistingProperty0,
   } = useManagementOperations();
 
   // OLD

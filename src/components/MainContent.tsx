@@ -1,42 +1,43 @@
+// TODO: Create project info page with separate tab
 // Main page's content: displays client list, manage clients, manage properties
-import { lazy, Suspense } from "react"
-import { Route, Routes, Navigate, useLocation } from "react-router-dom"
-import { ACTIVE_MANAGEMENT, PAGE_ROUTES } from "../types/actionTypes"
-import useClients from "../hooks/useClients"
-import useProperty from "../hooks/useProperty"
-import LoaderMainContent from "./LoaderMainContent"
-import text from "../data/text.json"
+import { lazy, Suspense } from "react";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
+import { ACTIVE_MANAGEMENT, PAGE_ROUTES } from "../types/actionTypes";
+import useClients from "../hooks/useClients";
+import useProperty from "../hooks/useProperty";
+import LoaderMainContent from "./LoaderMainContent";
+import text from "../data/text.json";
 
 // LAZY LOAD
-const LazyMemoizedClientList = lazy(() => import("./ClientList"))
-const LazyMemoizedManagement = lazy(() => import("./Management"))
+const LazyMemoizedClientList = lazy(() => import("./ClientList"));
+const LazyMemoizedManagement = lazy(() => import("./Management"));
 
 const MainContent = () => {
   // ROUTE
-  const location = useLocation()
-  const currentPath = location.pathname
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   // CONTEXT
-  const { property } = useProperty()
-  const { clients, filteredClients } = useClients()
+  const { property } = useProperty();
+  const { clients, filteredClients } = useClients();
 
   // CONDITIONAL DISPLAY
-  let activeTitle: string
+  let activeTitle: string;
   switch (currentPath) {
     case PAGE_ROUTES.CLIENTS_LIST:
-      activeTitle = text["title-content-clients-list"]
-      break
+      activeTitle = text["title-content-clients-list"];
+      break;
     case PAGE_ROUTES.CLIENTS_FILTERED:
-      activeTitle = text["title-content-clients-filtered"]
-      break
+      activeTitle = text["title-content-clients-filtered"];
+      break;
     case PAGE_ROUTES.MANAGE_CLIENTS:
-      activeTitle = text["title-content-clients-management"]
-      break
+      activeTitle = text["title-content-clients-management"];
+      break;
     case PAGE_ROUTES.MANAGE_PROPERTIES:
-      activeTitle = text["title-content-properties-management"]
-      break
+      activeTitle = text["title-content-properties-management"];
+      break;
     default:
-      activeTitle = text["content-title-content-unavailable"]
+      activeTitle = text["content-title-content-unavailable"];
   }
 
   return (
@@ -81,7 +82,7 @@ const MainContent = () => {
         </Routes>
       </Suspense>
     </div>
-  )
-}
+  );
+};
 
-export default MainContent
+export default MainContent;

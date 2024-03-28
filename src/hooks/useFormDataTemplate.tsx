@@ -5,13 +5,17 @@ import {
   ClientFormTemplateI,
   InputFieldTypesE,
   PropertyFormTemplateI,
-} from "../types/types"
-import useProperty from "./useProperty"
-import { TransformedFormFieldI } from "../types/types"
+} from "../types/types";
+import useProperty from "./useProperty";
+import { TransformedFormFieldI } from "../types/types";
+import useClients from "./useClients";
 
 const useFormDataTemplate = () => {
   // CONTEXT
-  const { property } = useProperty()
+  const { property } = useProperty();
+  const { activeClient } = useClients();
+  console.log(activeClient);
+  // TODO: utilize activeClient's properties instead of property???
 
   // TEMPLATES
   // Property
@@ -37,13 +41,13 @@ const useFormDataTemplate = () => {
         value: false,
         required: false,
       },
-    }
-  }
+    };
+  };
 
   // Client
   const getClientFormTemplate = (): ClientFormTemplateI => {
     // transform properties to form data templates
-    const transformedObject: { [key: string]: TransformedFormFieldI } = {}
+    const transformedObject: { [key: string]: TransformedFormFieldI } = {};
     property?.forEach((item) => {
       transformedObject[item.id] = {
         label: item.label,
@@ -55,15 +59,17 @@ const useFormDataTemplate = () => {
               ? true
               : false
             : "",
-      }
-    })
+      };
+    });
+
+    console.log(transformedObject);
 
     // get positions
-    const positions = Object.values(JobPositionsE)
+    const positions = Object.values(JobPositionsE);
 
     // template
     return {
-      "full name": {
+      full_name: {
         type: InputFieldTypesE.text,
         label: "Full name",
         value: "",
@@ -95,10 +101,10 @@ const useFormDataTemplate = () => {
         required: false,
       },
       ...transformedObject,
-    }
-  }
+    };
+  };
 
-  return { getClientFormTemplate, getPropertyFormTemplate }
-}
+  return { getClientFormTemplate, getPropertyFormTemplate };
+};
 
-export default useFormDataTemplate
+export default useFormDataTemplate;

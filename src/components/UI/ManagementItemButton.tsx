@@ -1,6 +1,6 @@
 // Control Buttons for management item components
-import testID from "../../data/data_test_id.json"
-import { ManagementItemButtonPropsI } from "../../types/types"
+import testID from "../../data/data_test_id.json";
+import { ManagementItemButtonPropsI } from "../../types/types";
 
 const ManagementItemButton = ({
   clicked,
@@ -18,7 +18,7 @@ const ManagementItemButton = ({
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default ManagementItemButton
+export default ManagementItemButton;

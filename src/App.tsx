@@ -1,17 +1,17 @@
 // Main Layout
-import { lazy, Suspense } from "react"
-import NavigationMenu from "./components/NavigationMenu"
-import MainContent from "./components/MainContent"
-import LoaderMenu from "./components/LoaderMenu"
-import MainTitleAndDashboardContent from "./components/UI/MainTitleAndDashboardContent"
-import useToggleMenu from "./hooks/useToggleMenu"
+import { lazy, Suspense } from "react";
+import NavigationMenu from "./components/NavigationMenu";
+import MainContent from "./components/MainContent";
+import LoaderMenu from "./components/LoaderMenu";
+import MainTitleAndDashboardContent from "./components/UI/MainTitleAndDashboardContent";
+import useToggleMenu from "./hooks/useToggleMenu";
 
 // LAZY LOAD
-const LazyMenu = lazy(() => import("./components/UI/Menu"))
+const LazyMenu = lazy(() => import("./components/UI/Menu"));
 
 function App() {
   // CONTEXT
-  const { isToggled } = useToggleMenu()
+  const { isToggled } = useToggleMenu();
 
   return (
     <div className="flex min-h-dvh w-full flex-col overflow-y-auto md:bg-color_1 lg:h-screen lg:overflow-hidden lg:bg-color_5 lg:p-[2rem]">
@@ -26,7 +26,7 @@ function App() {
         <MainContent />
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
