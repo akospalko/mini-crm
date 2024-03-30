@@ -24,19 +24,22 @@ import {
 } from "../../Requests/apiRequests";
 import { FormEvent } from "react";
 import useProperty from "../../hooks/useProperty";
+import useClients from "../../hooks/useClients";
 
 const Form = ({ action }: FormPropsI) => {
   // CONTEXT
   const { toggleModal } = useToggleMenu();
   const { formData } = useForm();
   const { activeProperty } = useProperty();
+  const { activeClient } = useClients();
+  
   console.log(formData);
   // HOOK
   const {
     createNewClient,
     createNewProperty,
     updateExistingClient,
-    updateExistingProperty0,
+    updateExistingProperty,
   } = useManagementOperations();
 
   // OLD
@@ -50,6 +53,7 @@ const Form = ({ action }: FormPropsI) => {
     // TODO:
     const clientData: ClientItemCreateI = createNewClient(); // TODO: Rename createNewClient() ->
     // POST REQUEST
+
     await createClient(clientData);
     // await getAllClients();
     // toggleModal(false);
@@ -68,6 +72,25 @@ const Form = ({ action }: FormPropsI) => {
   };
 
   // ---------- NEW ----------
+  // Submit form, update existing property
+  const updateClientHandler = async (
+    e: FormEvent<HTMLFormElement>,
+    id: string
+  ) => {
+    e.preventDefault();
+    try {
+      if (!id || typeof id !== "string") {
+        throw new Error(`Invalid id: ${id}`);
+      }
+      if (id.charAt(0) !== "p") {
+        throw new Error(`Wrong id type: ${id}`);
+      }
+      // TODO:...
+    } catch (error) {
+      throw new Error(`Error updating property (${id}):`, error);
+    }
+  };
+  
   // Submit form, update existing property
   const updatePropertyHandler = async (
     e: FormEvent<HTMLFormElement>,
@@ -104,7 +127,7 @@ const Form = ({ action }: FormPropsI) => {
       break;
     case ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT:
       // TODO:
-      // activeHandler = async () => await createClientHandler();
+      activeHandler = async (e) => await updateClientHandler(e, activeClient.id);
       break;
     case ACTIVE_MENU_ACTION_TYPE.CREATE_PROPERTY:
       activeHandler = async (e) => createPropertyHandler(e);
