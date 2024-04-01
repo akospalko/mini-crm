@@ -82,10 +82,11 @@ const Form = ({ action }: FormPropsI) => {
       if (!id || typeof id !== "string") {
         throw new Error(`Invalid id: ${id}`);
       }
-      if (id.charAt(0) !== "p") {
+      if (id.charAt(0) !== "c") {
         throw new Error(`Wrong id type: ${id}`);
       }
-      // TODO:...
+      const updatedClientData: ClientItemCreateI = updateExistingClient();
+      await updateClient(id, updatedClientData);
     } catch (error) {
       throw new Error(`Error updating property (${id}):`, error);
     }
@@ -134,7 +135,6 @@ const Form = ({ action }: FormPropsI) => {
       break;
     case ACTIVE_MENU_ACTION_TYPE.EDIT_PROPERTY:
       activeHandler = async (e) => updatePropertyHandler(e, activeProperty.id);
-
       break;
     default:
       throw new Error(`${text["error-unknown-action-type"]} ${action}`);
@@ -146,21 +146,24 @@ const Form = ({ action }: FormPropsI) => {
       onSubmit={activeHandler}
       className="flex w-full flex-1 flex-col gap-5"
     >
-      {Object.keys(formData).map((item: string) => (
-        <MultiTypeInput
-          key={item}
-          name={item}
-          type={formData[item].type}
-          label={formData[item].label}
-          options={
-            formData[item].type === InputFieldTypesE.dropdown
-              ? (formData[item] as DropdownFormFieldI).options
-              : []
-          }
-          value={formData[item].value}
-          required={formData[item].required}
-        />
-      ))}
+      {Object.keys(formData).map(
+        (item: string) => {
+          console.log(item)
+          return <MultiTypeInput
+            key={item}
+            name={item}
+            type={formData[item].type}
+            label={formData[item].label}
+            options={
+              formData[item].type === InputFieldTypesE.dropdown
+                ? (formData[item] as DropdownFormFieldI).options
+                : []
+            }
+            value={formData[item].value}
+            required={formData[item].required}
+          />
+      }
+      )}
       <div
         data-testid={testID["form-button-container"]}
         className="my-4 flex w-full"
