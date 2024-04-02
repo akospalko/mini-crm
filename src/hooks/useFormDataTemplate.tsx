@@ -1,3 +1,6 @@
+
+// TOOD: Pass form data with type and required value???
+
 // Prepare and return form data templates
 import {
   PropertyTypeE,
@@ -13,8 +16,8 @@ import useClients from "./useClients";
 const useFormDataTemplate = () => {
   // CONTEXT
   const { property } = useProperty();
-  const { activeClient } = useClients();
-  console.log(activeClient);
+  const { clients, activeClient } = useClients();
+
   // TODO: utilize activeClient's properties instead of property???
 
   // TEMPLATES
@@ -44,11 +47,13 @@ const useFormDataTemplate = () => {
     };
   };
 
+  // TODO: Create client
   // Client
   const getClientFormTemplate = (): ClientFormTemplateI => {
     // transform properties to form data templates
     const transformedObject: { [key: string]: TransformedFormFieldI } = {};
     property?.forEach((item) => {
+      // console.log(item);
       transformedObject[item.id] = {
         label: item.label,
         type: item.type,
@@ -61,8 +66,6 @@ const useFormDataTemplate = () => {
             : "",
       };
     });
-
-    console.log(transformedObject);
 
     // get positions
     const positions = Object.values(JobPositionsE);
@@ -104,7 +107,54 @@ const useFormDataTemplate = () => {
     };
   };
 
-  return { getClientFormTemplate, getPropertyFormTemplate };
+// Update client
+const getUpdateClientFormTemplate = (): ClientFormTemplateI => {
+
+  // TODO: transformed client props
+  const transformedClientProperties = {};
+
+  // get positions
+  const positions = Object.values(JobPositionsE);
+
+  return {
+    full_name: {
+      type: InputFieldTypesE.text,
+      label: "Full name",
+      value: !!activeClient.full_name ? activeClient.full_name : "",
+      required: true,
+    },
+    address: {
+      type: InputFieldTypesE.text,
+      label: "Address",
+      value: !!activeClient.address ? activeClient.address : "",
+      required: true,
+    },
+    phone: {
+      type: InputFieldTypesE.text,
+      label: "Phone",
+      value: !!activeClient.phone ? activeClient.phone : "",
+      required: true,
+    },
+    note: {
+      type: InputFieldTypesE.textarea,
+      label: "Note",
+      value: !!activeClient.note ? activeClient.note : "",
+      required: true,
+    },
+    position: {
+      type: InputFieldTypesE.dropdown,
+      label: "Position",
+      options: positions,
+      value: !!activeClient.position ? activeClient.position : positions[0],
+      required: false,
+    },
+    
+    // TODO: transformed client props...
+    ...transformedClientProperties,
+  };
+};
+
+  return { getClientFormTemplate, getPropertyFormTemplate, getUpdateClientFormTemplate };
 };
 
 export default useFormDataTemplate;
