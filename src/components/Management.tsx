@@ -25,41 +25,44 @@ const Management = ({ data, activeManagementTab }: ManagementIProps) => {
   const { setFormData } = useForm();
 
   // HOOK
-  const { getClientFormTemplate, getPropertyFormTemplate } =
-    useFormDataTemplate();
+  const { getClientFormTemplate, getPropertyFormTemplate } = useFormDataTemplate();
 
   // HANDLERS
-  const openMenuHandler = (
+  // Setup menu
+  const setupMenuHandler = (
     formTemplateGetter: () => ClientFormTemplateI | PropertyFormTemplateI,
     menuActionType: ACTIVE_MENU_ACTION_TYPE
   ): void => {
-    // Toggle menu modal
-    toggleModal(true);
     // Set up active form template
     setFormData(formTemplateGetter());
     // Set menu content
     menuContentChangeHandler(menuActionType);
+    // Toggle menu modal
+    toggleModal(true);
   };
 
+  // Open create client menu handler
   const openCreateClientMenuHandler = (): void =>
-    openMenuHandler(
+    setupMenuHandler(
       getClientFormTemplate,
       ACTIVE_MENU_ACTION_TYPE.CREATE_CLIENT
     );
+
+  // Open create property menu handler
   const openCreatePropertyMenuHandler = (): void =>
-    openMenuHandler(
+    setupMenuHandler(
       getPropertyFormTemplate,
       ACTIVE_MENU_ACTION_TYPE.CREATE_PROPERTY
     );
 
   // Conditional menu handler
-  let propertyMenuHandler: () => void;
+  let openMenuHandler: () => void;
   switch (activeManagementTab) {
     case ACTIVE_MANAGEMENT.CLIENT_MANAGEMENT:
-      propertyMenuHandler = openCreateClientMenuHandler;
+      openMenuHandler = openCreateClientMenuHandler;
       break;
     case ACTIVE_MANAGEMENT.PROPERTY_MANAGEMENT:
-      propertyMenuHandler = openCreatePropertyMenuHandler;
+      openMenuHandler = openCreatePropertyMenuHandler;
       break;
   }
 
@@ -97,7 +100,7 @@ const Management = ({ data, activeManagementTab }: ManagementIProps) => {
     <div className="grid grid-cols-1 grid-rows-[50px,1fr] gap-5">
       <CreateItemButton
         title={text["title-create"]}
-        clicked={propertyMenuHandler}
+        clicked={openMenuHandler}
       />
       <div className="flex w-full flex-col gap-5">
         {data?.length ? tabContent : <EmptyList />}
