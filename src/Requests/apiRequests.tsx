@@ -80,7 +80,7 @@ export const createClient = async (
   userData: ClientItemCreateI | PropertyItemI
 ): Promise<ApiRequestResultI> => {
   try {
-    return apiRequest(HTTP_METHOD.POST, "/clients", userData);
+    return await apiRequest(HTTP_METHOD.POST, "/clients", userData);
   } catch (error) {
     console.error("Error creating clients:", error);
     throw error;
@@ -92,7 +92,7 @@ export const updateClient = async (
   updatedData: ClientItemI
 ): Promise<ApiRequestResultI> => {
   try {
-    return apiRequest(HTTP_METHOD.PUT, `/clients/${id}`, updatedData);
+    return await apiRequest(HTTP_METHOD.PATCH, `/clients/${id}`, updatedData); // update id/clients-update || id/clients/update || etc
   } catch (error) {
     console.error("Error updating client:", error);
     throw error;
@@ -160,9 +160,28 @@ export const deleteProperty = async (
   id: string
 ): Promise<ApiRequestResultI> => {
   try {
-    return apiRequest(HTTP_METHOD.DELETE, `/properties/${id}`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.DELETE, `/properties/${id}`, emptyReqData);
   } catch (error) {
     console.error("Error deleting property:", error);
     throw error;
   }
 };
+
+// FORM TEMPLATES
+export const getCreateClientTemplate = async (): Promise<ApiRequestResultI> => {
+  try {
+    return await apiRequest(HTTP_METHOD.GET, `/form-templates/client-create`, emptyReqData);
+  } catch (error) {
+    console.error("Error deleting property:", error);
+    throw error;
+  }
+}
+
+export const getEditClientTemplate = async (id: string): Promise<ApiRequestResultI> => { // Proper type
+  try {
+    return await apiRequest(HTTP_METHOD.GET, `/form-templates/${id}/client-edit`, emptyReqData);
+  } catch (error) {
+    console.error("Error deleting property:", error);
+    throw error;
+  }
+}
