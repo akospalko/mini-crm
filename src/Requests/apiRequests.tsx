@@ -68,7 +68,7 @@ export const getAllClients = async (): Promise<ApiRequestResultI> => {
 
 export const getClientById = async (id: string): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.GET, `/clients/${id}`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.GET, `/clients/${id}/get`, emptyReqData);
   } catch (error) {
     console.error("Error fetching client:", error);
     throw error;
@@ -80,7 +80,7 @@ export const createClient = async (
   userData: ClientItemCreateI | PropertyItemI
 ): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.POST, "/clients", userData);
+    return await apiRequest(HTTP_METHOD.POST, "/clients/create", userData);
   } catch (error) {
     console.error("Error creating clients:", error);
     throw error;
@@ -92,7 +92,7 @@ export const updateClient = async (
   updatedData: ClientItemI
 ): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.PATCH, `/clients/${id}`, updatedData); // update id/clients-update || id/clients/update || etc
+    return await apiRequest(HTTP_METHOD.PATCH, `/clients/${id}/update`, updatedData); // update id/clients-update || id/clients/update || etc
   } catch (error) {
     console.error("Error updating client:", error);
     throw error;
@@ -101,7 +101,7 @@ export const updateClient = async (
 
 export const deleteClient = async (id: string): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.DELETE, `/clients/${id}`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.DELETE, `/clients/${id}/delete`, emptyReqData);
   } catch (error) {
     console.error("Error deleting client:", error);
     throw error;
@@ -122,7 +122,7 @@ export const getPropertyById = async (
   id: string
 ): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.GET, `/properties/${id}`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.GET, `/properties/${id}/get`, emptyReqData);
   } catch (error) {
     console.error("Error fetching property:", error);
     throw error;
@@ -133,7 +133,7 @@ export const createProperty = async (
   userData: ClientItemI | PropertyItemI
 ): Promise<ApiRequestResultI> => {
   try {
-    return apiRequest(HTTP_METHOD.POST, "/properties", userData); // TODO PROPERTY DATA
+    return apiRequest(HTTP_METHOD.POST, "/properties/create", userData); // TODO PROPERTY DATA
   } catch (error) {
     console.error("Error creating property:", error);
     throw error;
@@ -160,7 +160,7 @@ export const deleteProperty = async (
   id: string
 ): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.DELETE, `/properties/${id}`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.DELETE, `/properties/${id}/delete`, emptyReqData);
   } catch (error) {
     console.error("Error deleting property:", error);
     throw error;
