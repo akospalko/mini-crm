@@ -172,16 +172,34 @@ export const getCreateClientTemplate = async (): Promise<ApiRequestResultI> => {
   try {
     return await apiRequest(HTTP_METHOD.GET, `/form-templates/client-create`, emptyReqData);
   } catch (error) {
-    console.error("Error deleting property:", error);
+    console.error("Error getting create client form template:", error);
     throw error;
   }
 }
 
-export const getEditClientTemplate = async (id: string): Promise<ApiRequestResultI> => { // Proper type
+export const getEditClientTemplate = async (id: string): Promise<ApiRequestResultI> => { // TOFIX: type
   try {
     return await apiRequest(HTTP_METHOD.GET, `/form-templates/${id}/client-edit`, emptyReqData);
   } catch (error) {
-    console.error("Error deleting property:", error);
+    console.error("Error getting edit client form template:", error);
+    throw error;
+  }
+}
+
+export const getCreatePropertyTemplate = async (): Promise<ApiRequestResultI> => {
+  try {
+    return await apiRequest(HTTP_METHOD.GET, `/form-templates/property-create`, emptyReqData);
+  } catch (error) {
+    console.error("Error getting create property form template:", error);
+    throw error;
+  }
+}
+
+export const getEditPropertyTemplate = async (id: string): Promise<ApiRequestResultI> => { // TOFIX: type
+  try {
+    return await apiRequest(HTTP_METHOD.GET, `/form-templates/${id}/property-edit`, emptyReqData);
+  } catch (error) {
+    console.error("Error getting edit property form template:", error);
     throw error;
   }
 }
