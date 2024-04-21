@@ -33,11 +33,8 @@ const apiRequest: ApiRequestI = async (
   url: string,
   data: (ClientItemI | ClientItemCreateI) | PropertyItemI
 ) => {
-  console.log("starting axios req");
   try {
-    console.log(JSON.stringify({ method, url, data }));
     const response: AxiosResponse = await axiosInstance({ method, url, data });
-    console.log(response);
     return {
       responseData: response.data || [],
       error: null,
@@ -68,7 +65,7 @@ export const getAllClients = async (): Promise<ApiRequestResultI> => {
 
 export const getClientById = async (id: string): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.GET, `/clients/${id}/get`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.GET, `/clients/${id}/get-client`, emptyReqData);
   } catch (error) {
     console.error("Error fetching client:", error);
     throw error;
@@ -80,7 +77,7 @@ export const createClient = async (
   userData: ClientItemCreateI | PropertyItemI
 ): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.POST, "/clients/create", userData);
+    return await apiRequest(HTTP_METHOD.POST, "/clients/create-client", userData);
   } catch (error) {
     console.error("Error creating clients:", error);
     throw error;
@@ -92,7 +89,7 @@ export const updateClient = async (
   updatedData: ClientItemI
 ): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.PATCH, `/clients/${id}/update`, updatedData); // update id/clients-update || id/clients/update || etc
+    return await apiRequest(HTTP_METHOD.PATCH, `/clients/${id}/update-client`, updatedData); 
   } catch (error) {
     console.error("Error updating client:", error);
     throw error;
@@ -101,7 +98,7 @@ export const updateClient = async (
 
 export const deleteClient = async (id: string): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.DELETE, `/clients/${id}/delete`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.DELETE, `/clients/${id}/delete-client`, emptyReqData);
   } catch (error) {
     console.error("Error deleting client:", error);
     throw error;
@@ -122,7 +119,7 @@ export const getPropertyById = async (
   id: string
 ): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.GET, `/properties/${id}/get`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.GET, `/properties/${id}/get-property`, emptyReqData);
   } catch (error) {
     console.error("Error fetching property:", error);
     throw error;
@@ -133,7 +130,7 @@ export const createProperty = async (
   userData: ClientItemI | PropertyItemI
 ): Promise<ApiRequestResultI> => {
   try {
-    return apiRequest(HTTP_METHOD.POST, "/properties/create", userData); // TODO PROPERTY DATA
+    return apiRequest(HTTP_METHOD.POST, "/properties/create-property", userData); // TODO PROPERTY DATA
   } catch (error) {
     console.error("Error creating property:", error);
     throw error;
@@ -147,7 +144,7 @@ export const updateProperty = async (
   try {
     return await apiRequest(
       HTTP_METHOD.PATCH,
-      `/properties/${id}`,
+      `/properties/${id}/update-property`,
       updatedData
     );
   } catch (error) {
@@ -160,7 +157,7 @@ export const deleteProperty = async (
   id: string
 ): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.DELETE, `/properties/${id}/delete`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.DELETE, `/properties/${id}/delete-property`, emptyReqData);
   } catch (error) {
     console.error("Error deleting property:", error);
     throw error;
@@ -170,7 +167,7 @@ export const deleteProperty = async (
 // FORM TEMPLATES
 export const getCreateClientTemplate = async (): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.GET, `/form-templates/client-create`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.GET, `/form-templates/create-client`, emptyReqData);
   } catch (error) {
     console.error("Error getting create client form template:", error);
     throw error;
@@ -179,7 +176,7 @@ export const getCreateClientTemplate = async (): Promise<ApiRequestResultI> => {
 
 export const getEditClientTemplate = async (id: string): Promise<ApiRequestResultI> => { // TOFIX: type
   try {
-    return await apiRequest(HTTP_METHOD.GET, `/form-templates/${id}/client-edit`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.GET, `/form-templates/${id}/edit-client`, emptyReqData);
   } catch (error) {
     console.error("Error getting edit client form template:", error);
     throw error;
@@ -188,7 +185,7 @@ export const getEditClientTemplate = async (id: string): Promise<ApiRequestResul
 
 export const getCreatePropertyTemplate = async (): Promise<ApiRequestResultI> => {
   try {
-    return await apiRequest(HTTP_METHOD.GET, `/form-templates/property-create`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.GET, `/form-templates/create-property`, emptyReqData);
   } catch (error) {
     console.error("Error getting create property form template:", error);
     throw error;
@@ -197,7 +194,7 @@ export const getCreatePropertyTemplate = async (): Promise<ApiRequestResultI> =>
 
 export const getEditPropertyTemplate = async (id: string): Promise<ApiRequestResultI> => { // TOFIX: type
   try {
-    return await apiRequest(HTTP_METHOD.GET, `/form-templates/${id}/property-edit`, emptyReqData);
+    return await apiRequest(HTTP_METHOD.GET, `/form-templates/${id}/edit-property`, emptyReqData);
   } catch (error) {
     console.error("Error getting edit property form template:", error);
     throw error;
