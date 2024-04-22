@@ -1,10 +1,8 @@
+// Management page client and property pg
 // TODO: Fix types
 // TODO: throw error instead of console log
-// TODO: Fix file name
-// Management page client and property pg
 import useClients from "../hooks/useClients";
 import useForm from "../hooks/useForm";
-import useFormDataTemplate from "../hooks/useFormDataTemplate";
 import useToggleMenu from "../hooks/useToggleMenu";
 import useProperty from "../hooks/useProperty";
 import {
@@ -18,7 +16,6 @@ import {
   PropertyItemI,
   ClientManagementPropsI,
 } from "../types/types";
-import { populateFormWithActiveData } from "../utility/misc";
 import ManagementItemButton from "./UI/ManagementItemButton";
 import { DeleteIcon, EditIcon } from "./UI/SVG";
 import dataAction from "../data/data_test_id.json";
@@ -29,23 +26,24 @@ import {
   deleteProperty,
   getAllClients,
   getAllProperties,
+  getClientById, 
+  getPropertyById, 
+  getEditClientTemplate,
+  getEditPropertyTemplate
 } from "../Requests/apiRequests";
-import { getClientById, getPropertyById } from "../Requests/apiRequests";
 
-const MangementItem = ({
-  itemData,
-  activeManagement,
-}: ClientManagementPropsI) => {
+const ManagementItem = (
+  {
+    itemData,
+    activeManagement,
+  }: ClientManagementPropsI) => {
+
   // CONTEXTS
-  const { dispatch: dispatchClients, REDUCER_ACTIONS_CLIENT } = useClients();
-  const { dispatch: dispatchProperty, REDUCER_ACTIONS_PROPERTY } =
-    useProperty();
-  const { toggleModal, menuContentChangeHandler } = useToggleMenu();
+  const { dispatch: dispatchClient, REDUCER_ACTIONS_CLIENT } = useClients();
+  const { dispatch: dispatchProperty, REDUCER_ACTIONS_PROPERTY } = useProperty();
+  const { toggleModal, menuContentChangeHandler, setupMenuHandler } = useToggleMenu();
   const { setFormData } = useForm();
-  // HOOK
-  const { getClientFormTemplate, getPropertyFormTemplate } =
-    useFormDataTemplate();
-
+  
   // HANDLERS
   // Delete client
   const deleteClientHandler = async (id: string): Promise<void> => {
@@ -58,7 +56,7 @@ const MangementItem = ({
       }
       await deleteClient(id);
       const { responseData } = await getAllClients();
-      dispatchClients({
+      dispatchClient({
         type: REDUCER_ACTION_TYPE_CLIENT.UPDATE_CLIENT,
         payload: { clients: responseData as ClientItemI[] },
       });
@@ -87,68 +85,52 @@ const MangementItem = ({
     }
   };
 
-  // Show client menu
-  const showClientHandler = async (id: string) => {
-    if (!id || typeof id !== "string") {
-      throw new Error(`Invalid id: ${id}`);
-    }
-    try {
-      // Fetch data
-      const response = await getClientById(id);
-      const { responseData } = response;
-      // Set up active menu content
-      menuContentChangeHandler(ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT);
-      // Update active property state
-      dispatchClients({
-        type: REDUCER_ACTIONS_CLIENT.UPDATE_ACTIVE_CLIENT,
-        payload: { activeClient: responseData as ClientItemI },
-      });
+  const openEditClientMenuHandler = async (id: string): Promise<void> => {
+    // NOTE: By storing active client as context state we can access its id in submit form handler
+    // TODO: empty activeClient state after menu close -> {}
+    const response = await getClientById(id);
+    const { responseData: activeClient } = response;
+    dispatchClient({
+      type: REDUCER_ACTIONS_CLIENT.UPDATE_ACTIVE_CLIENT,
+      payload: { activeClient: activeClient as ClientItemI },
+    });
 
-      // Populate form
-      const populatedForm = populateFormWithActiveData(
-        responseData,
-        getClientFormTemplate()
-      );
-      // Update form state with populated data
-      setFormData(populatedForm);
-      // Open modal
-      toggleModal(true);
+    const { responseData: editClientFormTemplate } = await getEditClientTemplate(id);
+
+    menuContentChangeHandler(ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT);
+    setupMenuHandler (
+      editClientFormTemplate,
+      ACTIVE_MENU_ACTION_TYPE.EDIT_CLIENT,
+      setFormData
+    );
+
+    toggleModal(true);
+    try {
     } catch (error) {
-      // Handle errors
-      console.error(`Error fetching property item (${id}):`, error);
+      console.error(`Error fetching form template for (${id}):`, error);
     }
-  };
+  }
 
   // Show property menu
-  const showPropertyHandler = async (id: string) => {
+  const openEditPropertyMenuHandler = async (id: string) => {
     if (!id || typeof id !== "string") {
       throw new Error(`Invalid id: ${id}`);
     }
-    try {
-      // Fetch data
-      const propertyData = await getPropertyById(id);
-      const { responseData } = propertyData;
-      // Set up active menu content
-      menuContentChangeHandler(ACTIVE_MENU_ACTION_TYPE.EDIT_PROPERTY);
-      // Update active property state
-      dispatchProperty({
-        type: REDUCER_ACTIONS_PROPERTY.UPDATE_ACTIVE_PROPERTY,
-        payload: { activeProperty: responseData as PropertyItemI },
-      });
+    const response = await getPropertyById(id);
+    const { responseData: activeProperty } = response;
+    dispatchProperty({
+      type: REDUCER_ACTIONS_PROPERTY.UPDATE_ACTIVE_PROPERTY,
+      payload: { activeProperty: activeProperty as PropertyItemI },
+    });
 
-      // Populate form
-      const populatedForm = populateFormWithActiveData(
-        responseData,
-        getPropertyFormTemplate()
-      );
-      // Update form state with populated data
-      setFormData(populatedForm);
-      // Open modal
-      toggleModal(true);
-    } catch (error) {
-      // Handle errors
-      console.error(`Error fetching property item (${id}):`, error);
-    }
+    const { responseData: editPropertyFormTemplate } = await getEditPropertyTemplate(id);
+    menuContentChangeHandler(ACTIVE_MENU_ACTION_TYPE.EDIT_PROPERTY);
+    setupMenuHandler(
+      editPropertyFormTemplate,
+      ACTIVE_MENU_ACTION_TYPE.EDIT_PROPERTY,
+      setFormData
+    );
+    toggleModal(true);
   };
 
   // STYLE
@@ -164,7 +146,7 @@ const MangementItem = ({
   let itemContent;
   switch (activeManagement) {
     case ACTIVE_MANAGEMENT.CLIENT_MANAGEMENT:
-      activeEditHandler = async () => await showClientHandler(itemData.id);
+      activeEditHandler = async () => await openEditClientMenuHandler(itemData.id);
       activeDeleteHandler = async () => await deleteClientHandler(itemData.id);
       itemContent = (
         <>
@@ -181,7 +163,7 @@ const MangementItem = ({
       );
       break;
     case ACTIVE_MANAGEMENT.PROPERTY_MANAGEMENT:
-      activeEditHandler = async () => await showPropertyHandler(itemData.id);
+      activeEditHandler = async () => await openEditPropertyMenuHandler(itemData.id);
       activeDeleteHandler = async () =>
         await deletePropertyHandler(itemData.id);
       itemContent = (
@@ -227,4 +209,4 @@ const MangementItem = ({
   );
 };
 
-export default MangementItem;
+export default ManagementItem;
