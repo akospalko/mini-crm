@@ -14,7 +14,7 @@ const initializePositionCounts = (): Record<JobPositionsE, number> => {
   }
 }
 
-const useManagementOperations = () => {
+const useGroupedPositions = () => {
   // CONTEXT
   const { clients } = useClients()
 
@@ -49,4 +49,4 @@ const useManagementOperations = () => {
   return clientPerPosition
 }
 
-export default useManagementOperations
+export default useGroupedPositions;

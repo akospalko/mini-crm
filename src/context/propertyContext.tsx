@@ -86,7 +86,6 @@ export const usePropertyContext = (initPropertyState: PropertyStateI) => {
       try {
         // Call your getAllProperties function
         const { responseData /*, error, status */ } = await getAllProperties();
-        console.log(responseData);
         dispatch({
           type: REDUCER_ACTION_TYPE_PROPERTY.UPDATE_PROPERTY,
           payload: { property: responseData as PropertyItemI[] },
