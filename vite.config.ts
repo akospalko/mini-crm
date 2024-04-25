@@ -17,6 +17,12 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      "/api/v1/form-templates": {
+        target: "http://localhost:8001",
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
     },
   },
   plugins: [react()],
