@@ -23,7 +23,7 @@ export const useToggleMenuContext: () => UseToggleMenuContextI = () => {
       return newModalValue
     })
   }
-
+  
   // Set active menu content key
   const menuContentChangeHandler = (
     activeContent: ACTIVE_MENU_ACTION_TYPE = ACTIVE_MENU_ACTION_TYPE.DEFAULT
@@ -31,7 +31,25 @@ export const useToggleMenuContext: () => UseToggleMenuContextI = () => {
     setMenuContent(activeContent)
   }
 
-  return { isToggled, toggleModal, menuContent, menuContentChangeHandler }
+  // Set up form menu 
+  // TODO: Type
+  const setupMenuHandler = (
+    formTemplate: any,
+    menuActionType: any,
+    formSetter: any,
+  ): void => {
+    formSetter(formTemplate);
+    menuContentChangeHandler(menuActionType);
+    toggleModal(true);
+  };
+
+  return { 
+    isToggled,
+    toggleModal,
+    menuContent,
+    menuContentChangeHandler, 
+    setupMenuHandler
+  }
 }
 
 // ----------CREATE CONTEXT----------
