@@ -262,7 +262,7 @@ export interface ManagementIProps {
   activeManagementTab: ACTIVE_MANAGEMENT;
 }
 
-// MangementItem.tsx
+// ManagementItem.tsx
 export interface ClientManagementPropsI {
   itemData: ClientItemI | PropertyItemI;
   activeManagement: ACTIVE_MANAGEMENT;
