@@ -5,7 +5,8 @@ import {
   DropdownFormFieldI,
   InputFieldTypesE,
   FormPropsI,
-  PropertyItemI
+  PropertyItemI,
+  JobPositionsE
 } from "../../types/types";
 import { ACTIVE_MENU_ACTION_TYPE } from "../../types/actionTypes";
 import useForm from "../../hooks/useForm";
@@ -33,7 +34,7 @@ const PropertyForm = ({ action }: FormPropsI) => {
   const { formData, setFormData } = useForm();
   const { dispatch: dispatchProperty, REDUCER_ACTIONS_PROPERTY, activeProperty } = useProperty();
 
-  console.log(formData);
+  console.log(formData["type"].value);
   
   // Handlers
   const createPropertyHandler = async (
@@ -95,43 +96,42 @@ const PropertyForm = ({ action }: FormPropsI) => {
       {/* Label */}
       <InputText
         type={formData["label"].type}
-        name={formData["label"]}
+        name="label"
         label={formData["label"].label}
         value={formData["label"].value as string}
         required={formData["label"].required}
       />
       {/* Type */}
-      <Dropdown
-        name={formData["type"]}
-        label={formData["type"].type}
-        options={(formData["type"] as DropdownFormFieldI).options}
-        value={formData["type"].value}
-        // required={formData["type"].required} 
+       <Dropdown
+        name="type"
+        label={formData.type.label}
+        options={formData.type.options}
+        value={formData.type.value}
       />
       {/* Min & Max (optional) */}
-      { formData["type"].value === "text" || formData["type"].value === "textarea" &&
+      { formData["type"].value === "text" || formData["type"].value === "textarea" ?
         ( 
           <>
             <InputNumber
               type={formData["min"].type}
-              name={formData["min"]}
+              name="min"
               label={formData["min"].label}
               value={formData["min"].value}
               required={formData["min"].required}
             />
             <InputNumber
               type={formData["max"].type}
-              name={formData["max"]}
+              name="max"
               label={formData["max"].label}
               value={formData["max"].value}
               required={formData["max"].required}
             />
           </>
-        )
+        ) : null
       }
       {/* Required */}
       <Checkbox
-        name={formData["required"]}
+        // name={formData["required"]}
         label={formData["required"].label}
         checkValue={formData["required"].value}
         required={formData["required"].required}
