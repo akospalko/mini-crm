@@ -1,32 +1,24 @@
-// Reusable input/textarea field for handling text types
+// Reusable number input field 
 import { ChangeEvent } from "react"
 import useForm from "../../hooks/useForm"
-import {
-  ClientFormTemplateI,
-  PropertyFormTemplateI,
-  InputNumberPropsI,
-} from "../../types/types"
+import { InputNumberPropsI } from "../../types/types"
 import Label from "./Label"
 
-const InputNumber = ({ name, type, label, value, required }: InputNumberPropsI) => {
+const InputNumber = ({ name, type, label, value = '', required }: InputNumberPropsI) => {
   // CONTEXT
   const { setFormData } = useForm()
 
   // HANDLER
   const inputChangeHandler = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = e.target
     const parsedValue = parseInt(value, 10);
     
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        [name]: {
-          ...prevFormData[name],
-          value: parsedValue,
-        },
-      } as ClientFormTemplateI | PropertyFormTemplateI
+    setFormData((prev) => {
+      const newStateCopy = JSON.parse(JSON.stringify(prev));
+      newStateCopy[name].value = parsedValue;
+      return newStateCopy;
     })
   }
 
