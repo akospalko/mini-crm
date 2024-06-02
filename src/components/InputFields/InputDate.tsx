@@ -1,24 +1,20 @@
 // Date input field
 import { ChangeEvent } from "react"
 import useForm from "../../hooks/useForm"
-import { ClientFormTemplateI, PropertyFormTemplateI, DateInputProps } from "../../types/types"
-import Label from "./Label"
+import { InputDateProps } from "../../types/types"
+import Label from "../UI/Label"
 
-const DateInput = ({ value, name, label, required }: DateInputProps) => {
+const InputDate = ({ value, name, label, required }: InputDateProps) => {
   // CONTEXT
   const { setFormData } = useForm()
 
   // HANDLER
   const onDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData((prevFormData) => {
-      return {
-        ...prevFormData,
-        [name]: {
-          ...prevFormData[name],
-          value: value,
-        },
-      } as ClientFormTemplateI | PropertyFormTemplateI
+    setFormData((prevState) => {
+      const prevStateCopy = JSON.parse(JSON.stringify(prevState));
+      prevStateCopy[name].value = value;
+      return prevStateCopy;
     })
   }
 
@@ -37,4 +33,4 @@ const DateInput = ({ value, name, label, required }: DateInputProps) => {
   )
 }
 
-export default DateInput
+export default InputDate

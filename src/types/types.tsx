@@ -84,6 +84,7 @@ export type ClientKeys = keyof ClientItemI;
 // Input
 export enum InputFieldTypesE {
   text = "text",
+  number = "number",
   date = "date",
   boolean = "boolean", // same as checkbox
   checkbox = "checkbox",
@@ -268,11 +269,11 @@ export interface ClientManagementPropsI {
   activeManagement: ACTIVE_MANAGEMENT;
 }
 
-// Checkbox.tsx
+// InputCheckbox.tsx
 export interface CheckboxPropsI {
   name: string;
   label?: string;
-  checkValue: boolean;
+  value: boolean;
   readOnly?: boolean;
   required: boolean;
 }
@@ -283,8 +284,8 @@ export interface CreateItemButtonPropsI {
   clicked: () => void;
 }
 
-// DatePicker.tsx
-export interface DateInputProps {
+// InputDate.tsx
+export interface InputDateProps {
   value: string;
   name: string;
   label: string;
@@ -292,11 +293,11 @@ export interface DateInputProps {
 }
 
 // Dropdown.tsx
-export interface DropdownProps {
+export interface DropdownPropsI {
   name: string;
   label: string;
-  options: JobPositionsE[];
-  value: JobPositionsE;
+  options: JobPositionsE[]; // TODO Include others
+  value: JobPositionsE; // TODO Include others or use string
 }
 
 // Form.tsx
@@ -308,6 +309,15 @@ export interface FormPropsI {
 export interface InputTextPropsI {
   name: string;
   type: InputFieldTypesE.text | InputFieldTypesE.textarea;
+  label: string;
+  value: string;
+  required: boolean;
+}
+
+// InputNumber.tsx
+export interface InputNumberPropsI {
+  name: string;
+  type: InputFieldTypesE.number;
   label: string;
   value: string;
   required: boolean;
